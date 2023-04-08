@@ -1,0 +1,3 @@
+[submodule "plugins/zsh-interactive-cd"]
+	path = plugins/zsh-interactive-cd
+	url = https://github.com/changyuheng/zsh-interactive-cd.git
