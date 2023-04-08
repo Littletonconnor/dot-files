@@ -15,7 +15,7 @@ sources=(
   "$ZSH_CONFIG/plugins/z.sh"
   "$ZSH_CONFIG/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
   "$ZSH_CONFIG/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  "$ZSH_CONFIG/plugins/zsh-syntax-highlighting/zsh-interactive-cd.plugin.zsh"
+  "$ZSH_CONFIG/plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
   # Theme
   "$ZSH_CONFIG/themes/spaceship/spaceship.zsh-theme"
 )
