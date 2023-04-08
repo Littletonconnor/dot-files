@@ -3,3 +3,7 @@ function acp() {
   git commit -m "$1"
   git push origin HEAD
 }
+
+function getip {
+    curl -sL icanhazip.com
+}
