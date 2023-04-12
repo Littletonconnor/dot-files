@@ -4,6 +4,12 @@ function acp() {
   git push origin HEAD
 }
 
+function mpb() {
+  git checkout master
+  git pull origin master
+  git checkout -
+}
+
 function getip {
     curl -sL icanhazip.com
 }
