@@ -14,6 +14,8 @@ alias zshrc="cd ~/zshrc"
 alias e="exa -lah"
 alias cat="bat"
 
+alias func="cat ~/zshrc/function.sh"
+
 alias pn="pnpm"
 alias px="pnpx"
 

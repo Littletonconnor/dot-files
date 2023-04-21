@@ -14,7 +14,7 @@ function mpb() {
 }
 
 function glog () {
-  git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate
 }
 
 function gRecentChanges () {
