@@ -28,3 +28,7 @@ function gRecentChanges () {
 function getIp {
     curl -sL icanhazip.com
 }
+
+function usedPorts {
+  lsof -i -P -n | grep LISTEN
+}
