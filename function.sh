@@ -17,7 +17,7 @@ function glog () {
   git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate
 }
 
-function gRecentChanges () {
+function grecentchanges () {
   git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- $file) $file"; done | sort -k1,1 -k2,2
 }
 
@@ -25,10 +25,14 @@ function gRecentChanges () {
 # # # # # # # # # # OTHER FUNCTIONS # # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-function getIp {
+function getip {
     curl -sL icanhazip.com
 }
 
-function usedPorts {
+function usedports {
   lsof -i -P -n | grep LISTEN
+}
+
+function killport {
+  kill $(lsof -i:$1)
 }
