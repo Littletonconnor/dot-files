@@ -13,6 +13,9 @@ function fancy_echo {
     "blue")
       color_code="34"
       ;;
+    "yellow")
+      color_code="33"
+      ;;
     *)
       echo "Error: Invalid color"
       return 1

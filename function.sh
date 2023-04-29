@@ -1,3 +1,5 @@
+source $HOME/zshrc/lib.sh
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -33,6 +35,33 @@ function usedports {
   lsof -i -P -n | grep LISTEN
 }
 
-function killport {
-  kill $(lsof -i:$1)
+function npm_benchmark () {
+  # Example usage:
+  # npm_benchmark 10 "test --silent"
+
+  local num_attempts="$1"
+  shift
+  local test_command="$*"
+  local total_elapsed_time=0
+
+  for ((i = 1; i <= num_attempts; i++)); do
+    echo "Running test attempt $i"
+    
+    start_time="$(date +%s.%N)"
+    npm run $test_command
+    exit_status=$?
+    end_time="$(date +%s.%N)"
+    
+    elapsed_time="$(bc <<<"$end_time-$start_time")"
+    total_elapsed_time=$(bc <<<"$total_elapsed_time+$elapsed_time")
+    fancy_echo "Test attempt $i took $elapsed_time s" "green"
+    
+    if [[ "$exit_status" != 0 ]]; then
+      fancy_echo "Failed after $i attempts" "red"
+      break
+    fi
+  done
+
+  local average_elapsed_time=$(bc <<<"scale=6;$total_elapsed_time/($num_attempts)")
+  fancy_echo "Average runtime: $average_elapsed_time s" "yellow"
 }
