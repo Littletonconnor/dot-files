@@ -1,4 +1,4 @@
-# zshrc dotfiles
+# zshrc config
 
 A simple zshrc dot file setup. Installation of tools is not included.
 
