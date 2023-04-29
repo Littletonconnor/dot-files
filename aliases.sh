@@ -20,3 +20,5 @@ alias pn="pnpm"
 alias px="pnpx"
 
 alias cls="clear"
+
+alias nvim_config="~/.config/nvim"
