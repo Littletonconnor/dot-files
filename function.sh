@@ -35,6 +35,10 @@ function usedports {
   lsof -i -P -n | grep LISTEN
 }
 
+function curlHeaders () {
+  curl -I -L --max-redirs 0 "$1"
+}
+
 function npm_benchmark () {
   # Example usage:
   # npm_benchmark 10 "test --silent"
