@@ -39,6 +39,10 @@ function curlHeaders () {
   curl -I -L --max-redirs 0 "$1"
 }
 
+function curlStatusCode () {
+  curl -I -s -o /dev/null -w '%{http_code}\n' "$1"
+}
+
 function npm_benchmark () {
   # Example usage:
   # npm_benchmark 10 "test --silent"
