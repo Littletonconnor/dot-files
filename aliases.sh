@@ -3,7 +3,7 @@ alias zshconfig="code ~/.zshrc"
 alias gs="git status"
 alias ga="git add ."
 
-alias p="nvim ~/personal/playground.js"
+alias p="code ~/personal/playground.js"
 alias p_run="node ~/personal/playground.js"
 
 alias oss="cd ~/oss"

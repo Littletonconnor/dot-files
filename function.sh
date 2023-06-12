@@ -73,3 +73,13 @@ function npm_benchmark () {
   local average_elapsed_time=$(bc <<<"scale=6;$total_elapsed_time/($num_attempts)")
   fancy_echo "Average runtime: $average_elapsed_time s" "yellow"
 }
+
+function checkCores () {
+  # Check the number of CPU cored on MacOs or Linux.
+  sysctl -n hw.logicalcpu
+}
+
+function checkRam () {
+  # Check the amount of RAM on MacOs or Linux (bytes).
+  sysctl hw.memsize
+}
