@@ -36,10 +36,12 @@ function usedports {
 }
 
 function curlHeaders () {
+  # Usage: curlHeaders https://google.com
   curl -I -L --max-redirs 0 "$1"
 }
 
 function curlStatusCode () {
+  # Usage: curlStatusCode https://google.com
   curl -I -s -o /dev/null -w '%{http_code}\n' "$1"
 }
 
@@ -81,5 +83,11 @@ function checkCores () {
 
 function checkRam () {
   # Check the amount of RAM on MacOs or Linux (bytes).
-  sysctl hw.memsize
+  sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
+}
+
+cleanBranches() {
+  # Remove all merge and non-merged branches locally except master and dev.
+  git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
+  git branch --no-merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -D
 }
