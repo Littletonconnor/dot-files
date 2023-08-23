@@ -40,6 +40,11 @@ function curlHeaders () {
   curl -I -L --max-redirs 0 "$1"
 }
 
+function curlAllHeaders () {
+  # Usage: curlAllHeaders https://google.com
+  curl curl -sIL "$1"
+}
+
 function curlStatusCode () {
   # Usage: curlStatusCode https://google.com
   curl -I -s -o /dev/null -w '%{http_code}\n' "$1"
