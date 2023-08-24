@@ -23,17 +23,15 @@ function grecentchanges () {
   git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- $file) $file"; done | sort -k1,1 -k2,2
 }
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # OTHER FUNCTIONS # # # # # # # # #  
-# # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-function getip {
-    curl -sL icanhazip.com
+cleanBranches() {
+  # Remove all merge and non-merged branches locally except master and dev.
+  git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
+  git branch --no-merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -D
 }
 
-function usedports {
-  lsof -i -P -n | grep LISTEN
-}
+# # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # Utility FUNCTIONS # # # # # # # #  
+# # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 function curlHeaders () {
   # Usage: curlHeaders https://google.com
@@ -49,6 +47,19 @@ function curlStatusCode () {
   # Usage: curlStatusCode https://google.com
   curl -I -s -o /dev/null -w '%{http_code}\n' "$1"
 }
+
+function getip {
+    curl -sL icanhazip.com
+}
+
+function usedports {
+  lsof -i -P -n | grep LISTEN
+}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # OTHER FUNCTIONS # # # # # # # # #  
+# # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 
 function npm_benchmark () {
   # Example usage:
@@ -81,6 +92,35 @@ function npm_benchmark () {
   fancy_echo "Average runtime: $average_elapsed_time s" "yellow"
 }
 
+function _cd () {
+  case "$1" in
+    root)
+      cd ~/work/frontend/santafe
+      ;;
+    santafe)
+      cd ~/work/frontend/santafe/apps/santafe
+      ;;
+    marketing)
+      cd ~/work/frontend/santafe/apps/marketing-site
+      ;;
+    ui)
+      cd ~/work/frontend/santafe/packages/ui
+      ;;
+    utils)
+      cd ~/work/frontend/santafe/packages/utilities
+      ;;
+    cookbooks)
+      cd ~/work/devops/cookbooks
+      ;;
+    zshrc)
+      cd ~/zshrc
+      ;;
+    aws)
+      cd ~/.aws
+      ;;
+  esac
+}
+
 function checkCores () {
   # Check the number of CPU cored on MacOs or Linux.
   sysctl -n hw.logicalcpu
@@ -89,10 +129,4 @@ function checkCores () {
 function checkRam () {
   # Check the amount of RAM on MacOs or Linux (bytes).
   sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
-}
-
-cleanBranches() {
-  # Remove all merge and non-merged branches locally except master and dev.
-  git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
-  git branch --no-merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -D
 }
