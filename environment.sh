@@ -1,1 +1,1 @@
-ZSH_CONFIG="$HOME/zshrc"
+ZSH_CONFIG="$HOME/.config/zshrc"

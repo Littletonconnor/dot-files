@@ -1,4 +1,4 @@
-source $HOME/zshrc/lib.sh
+source $HOME/.config/zshrc/lib.sh
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #  
