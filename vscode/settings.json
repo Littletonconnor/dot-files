@@ -1,0 +1,81 @@
+{
+  // ---- editor ---- //
+  "editor.fontFamily": "Fira Code, Menlo, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 13,
+  "editor.fontWeight": "500",
+  "editor.lineNumbers": "relative",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.inlineSuggest.enabled": true,
+  "editor.formatOnSave": true,
+  "[yaml]": {
+    "editor.formatOnSave": false
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "search.exclude": {
+    "**/.git": true,
+    "**/.github": true,
+    "**/.output": true,
+    "**/.pnpm": true,
+    "**/.vscode": true,
+    "**/.yarn": true,
+    "**/bower_components": true,
+    "**/dist/**": true,
+    "**/logs": true,
+    "**/node_modules": true,
+    "**/out/**": true,
+    "**/package-lock.json": true,
+    "**/pnpm-lock.yaml": true,
+    "**/tmp": true,
+    "**/yarn.lock": true
+  },
+  "editor.minimap.enabled": false,
+  "editor.minimap.size": "fit",
+
+  // ---- workbench ---- //
+  "workbench.colorTheme": "Night Owl (No Italics)",
+  "workbench.iconTheme": "eq-material-theme-icons-light",
+  "workbench.editor.wrapTabs": true,
+
+  // ---- extensions ---- //
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "json5"
+  ],
+  // when working in a mono-repo.
+  // "eslint.workingDirectories": [
+  //   {
+  //     "pattern": "./apps/*/"
+  //   },
+  //   {
+  //     "pattern": "./packages/*/"
+  //   }
+  // ],
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false,
+    "yaml": false,
+    "javascript": true
+  },
+  // Don't fold lines when moving around in vim.
+  "vim.foldfix": true
+}

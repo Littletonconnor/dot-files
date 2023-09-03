@@ -42,3 +42,11 @@ My shell driver is zsh. The dot-files associated to my zsh setup are located wit
 - function - A file with handy functions.
 - private - This is a user specific file, useful for themes and other things.
 - work - A file not checked into git. This is a good place to put any work specific aliases, or commands you use on a day to day.
+
+## tmux
+
+I sometimes use tmux. The dot-files associated to my tmux setup are located within the `tmux` directory and setup some simple but nice defaults.
+
+## vscode
+
+I use vscode as my main editor. This directory contains the settings and keybinding I use so I can easily copy paste them over when I need to.
