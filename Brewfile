@@ -9,10 +9,10 @@ end
 
 tap "homebrew/bundle"
 tap "homebrew/core"
-
 # packages
 brew "bat" # better cat
 brew "cloc" # lines of code counter
+brew "tldr" #  Information about commands
 brew "exa" # ls alternative
 brew "fd" # find alternative
 brew "fzf" # Fuzzy file searcher, used in scripts and in vim
