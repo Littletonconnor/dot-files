@@ -4,6 +4,7 @@ source $HOME/.config/dot-files/zsh/lib.sh
 # # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 function acp() {
+  # Usage: acp "commit message"
   git add .
   git commit -m "$1"
   git push origin HEAD
@@ -16,6 +17,7 @@ function mpb() {
 }
 
 function glog () {
+  # Usage: glog
   git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate
 }
 
@@ -130,6 +132,7 @@ function checkRam () {
   # Check the amount of RAM on MacOs or Linux (bytes).
   sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
 }
+
 function follow_logs() {
   local service_name="$1"
   local log_file="/var/log/$service_name.log"

@@ -9,6 +9,7 @@ end
 
 tap "homebrew/bundle"
 tap "homebrew/core"
+
 # packages
 brew "bat" # better cat
 brew "cloc" # lines of code counter
