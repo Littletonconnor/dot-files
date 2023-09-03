@@ -1,4 +1,4 @@
-source $HOME/.config/zshrc/lib.sh
+source $HOME/.config/dot-files/zsh/lib.sh
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #  
@@ -92,34 +92,34 @@ function npm_benchmark () {
   fancy_echo "Average runtime: $average_elapsed_time s" "yellow"
 }
 
-function _cd () {
-  case "$1" in
-    root)
-      cd ~/work/frontend/santafe
-      ;;
-    santafe)
-      cd ~/work/frontend/santafe/apps/santafe
-      ;;
-    marketing)
-      cd ~/work/frontend/santafe/apps/marketing-site
-      ;;
-    ui)
-      cd ~/work/frontend/santafe/packages/ui
-      ;;
-    utils)
-      cd ~/work/frontend/santafe/packages/utilities
-      ;;
-    cookbooks)
-      cd ~/work/devops/cookbooks
-      ;;
-    zshrc)
-      cd ~/zshrc
-      ;;
-    aws)
-      cd ~/.aws
-      ;;
-  esac
-}
+# function _cd () {
+#   case "$1" in
+#     root)
+#       cd ~/work/frontend/santafe
+#       ;;
+#     santafe)
+#       cd ~/work/frontend/santafe/apps/santafe
+#       ;;
+#     marketing)
+#       cd ~/work/frontend/santafe/apps/marketing-site
+#       ;;
+#     ui)
+#       cd ~/work/frontend/santafe/packages/ui
+#       ;;
+#     utils)
+#       cd ~/work/frontend/santafe/packages/utilities
+#       ;;
+#     cookbooks)
+#       cd ~/work/devops/cookbooks
+#       ;;
+#     zshrc)
+#       cd ~/zshrc
+#       ;;
+#     aws)
+#       cd ~/.aws
+#       ;;
+#   esac
+# }
 
 function checkCores () {
   # Check the number of CPU cored on MacOs or Linux.
@@ -129,4 +129,9 @@ function checkCores () {
 function checkRam () {
   # Check the amount of RAM on MacOs or Linux (bytes).
   sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
+}
+function follow_logs() {
+  local service_name="$1"
+  local log_file="/var/log/$service_name.log"
+  tail -f "$log_file"
 }

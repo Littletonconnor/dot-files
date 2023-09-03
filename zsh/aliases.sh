@@ -1,3 +1,5 @@
+alias grep="grep --color=auto"
+
 alias zshconfig="code ~/.zshrc"
 
 alias gs="git status"
