@@ -50,3 +50,9 @@ I sometimes use tmux. The dot-files associated to my tmux setup are located with
 ## vscode
 
 I use vscode as my main editor. This directory contains the settings and keybinding I use so I can easily copy paste them over when I need to.
+
+## git
+
+This directory contains my global git configuration that comes packaged with some nice git alias'.
+
+* This file is found at `~/.gitconfig`
