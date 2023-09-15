@@ -27,7 +27,8 @@ brew "tmux" # terminal multiplexer
 brew "tree" # pretty-print directory contents
 brew "vim" # Vim (latest)
 brew "zsh" # zsh (latest)
+brew "hyperfine" # benchmarking tool
 
 # zsh
-brew "spaceship"
-brew "zsh-autosuggestions"
+brew "spaceship" # zsh prompt
+brew "zsh-autosuggestions" # zsh autosuggestions

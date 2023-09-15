@@ -8,14 +8,17 @@ start_time="$(date +%s.%N)"
 sources=(
   "$ZSH_CONFIG/function.sh"
   "$ZSH_CONFIG/aliases.sh"
-  "$ZSH_CONFIG/private.sh"
+  "$ZSH_CONFIG/zshrc.local.sh"
 )
 
-# Source by itself and suppress SPACHEHIP_ROOT warning
-# Theme (must run setup script first. ./install.sh homebrew)
-source $HOMEBREW_PREFIX/opt/spaceship/spaceship.zsh 2>/dev/null
-source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh 
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# Sourced alone because they are brew installations.
+# Must ran install script before: `./install.sh homebrew`
+
+# Theme (pipe to /dev/null to suppress annoying warnings)
+source /usr/local/opt/spaceship/spaceship.zsh 2>/dev/null
+
+# Plugin
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 
 
 if [ -f "$ZSH_CONFIG/work.sh" ]; then
   sources+=("$ZSH_CONFIG/work.sh")

@@ -94,34 +94,10 @@ function npm_benchmark () {
   fancy_echo "Average runtime: $average_elapsed_time s" "yellow"
 }
 
-# function _cd () {
-#   case "$1" in
-#     root)
-#       cd ~/work/frontend/santafe
-#       ;;
-#     santafe)
-#       cd ~/work/frontend/santafe/apps/santafe
-#       ;;
-#     marketing)
-#       cd ~/work/frontend/santafe/apps/marketing-site
-#       ;;
-#     ui)
-#       cd ~/work/frontend/santafe/packages/ui
-#       ;;
-#     utils)
-#       cd ~/work/frontend/santafe/packages/utilities
-#       ;;
-#     cookbooks)
-#       cd ~/work/devops/cookbooks
-#       ;;
-#     zshrc)
-#       cd ~/zshrc
-#       ;;
-#     aws)
-#       cd ~/.aws
-#       ;;
-#   esac
-# }
+function test () {
+  cd ~/work/frontend/santafe/
+  ./t $1
+}
 
 function checkCores () {
   # Check the number of CPU cored on MacOs or Linux.
