@@ -15,10 +15,10 @@ sources=(
 # Must ran install script before: `./install.sh homebrew`
 
 # Theme (pipe to /dev/null to suppress annoying warnings)
-source /usr/local/opt/spaceship/spaceship.zsh 2>/dev/null
+source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 
 # Plugin
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh 
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 if [ -f "$ZSH_CONFIG/work.sh" ]; then
   sources+=("$ZSH_CONFIG/work.sh")

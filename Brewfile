@@ -5,6 +5,12 @@ if OS.mac?
     tap "homebrew/cask"
     tap "homebrew/cask-fonts"
     tap "koekeishiya/formulae"
+
+    cask "font-fira-code"
+    cask "font-jetbrains-mono"
+    cask "font-cascadia-mono"
+    cask "font-symbols-only-nerd-font"
+    cask "font-recursive-code"
 end
 
 tap "homebrew/bundle"

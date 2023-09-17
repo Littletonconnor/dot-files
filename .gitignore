@@ -1,1 +1,2 @@
-zshrc.local.sh
+*.local.*
+Brewfile.lock.json
