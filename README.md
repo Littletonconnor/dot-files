@@ -80,6 +80,7 @@ Here's a list of all the tools I use on a daily basis. Eventually I'll add a scr
 - [1password](https://www.1password.com)
 - [vscode](https://code.visualstudio.com)
 - [raycast](https://raycast.com)
+- [notion](https://www.notion.so)
 
 ## Troubleshooting
 
