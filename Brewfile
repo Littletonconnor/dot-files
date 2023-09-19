@@ -18,6 +18,7 @@ tap "homebrew/core"
 
 # packages
 brew "bat" # better cat
+brew "nvm" # node version manager
 brew "cloc" # lines of code counter
 brew "tldr" #  Information about commands
 brew "exa" # ls alternative
