@@ -114,3 +114,7 @@ function follow_logs() {
   local log_file="/var/log/$service_name.log"
   tail -f "$log_file"
 }
+
+function copy_file() {
+  pbcopy < "$1"
+}
