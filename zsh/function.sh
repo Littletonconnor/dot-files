@@ -118,3 +118,8 @@ function follow_logs() {
 function copy_file() {
   pbcopy < "$1"
 }
+
+function kill_port() {
+  # Usage: kill_port 2019 -> kills process running on port 2019 `caddy`
+  kill -9 $(lsof -t -i:$1)
+}
