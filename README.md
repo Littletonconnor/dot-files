@@ -73,10 +73,10 @@ This directory contains my global git configuration that comes packaged with som
 Here's a list of all the tools I use on a daily basis. Eventually I'll add a script to install all of these but for now you'll have to manually install them.
 
 - [iterm2](https://www.iterm2.com)
-- [homebrew](https://www.brew.sh)
   - Go to preferences -> profiles -> keys -> load preset -> natural text editing to enable alt + left/right arrow to skip words.
   - After installing font-fira-code update iterm2 to use that font by going to preferences -> profiles -> text -> font -> change font.
   - Disable the bell. Go to preferences -> profiles -> terminal -> notifications -> silence bell.
+- [homebrew](https://www.brew.sh)
 - [1password](https://www.1password.com)
 - [vscode](https://code.visualstudio.com)
 - [raycast](https://raycast.com)

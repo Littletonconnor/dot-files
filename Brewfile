@@ -36,6 +36,10 @@ brew "vim" # Vim (latest)
 brew "zsh" # zsh (latest)
 brew "hyperfine" # benchmarking tool
 
+# brew "rbenv" # ruby version manager
+
+# brew 'sqlite' # sqlite3
+
 # zsh
 brew "spaceship" # zsh prompt
 brew "zsh-autosuggestions" # zsh autosuggestions
