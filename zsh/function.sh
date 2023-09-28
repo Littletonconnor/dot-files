@@ -119,7 +119,16 @@ function copy_file() {
   pbcopy < "$1"
 }
 
+function sortpackagejson () {
+  npx sort-package-json
+}
+
 function kill_port() {
   # Usage: kill_port 2019 -> kills process running on port 2019 `caddy`
   kill -9 $(lsof -t -i:$1)
+}
+
+function untar() {
+  # Usage: untar file.tar.gz
+  tar -xvzf "$1"
 }
