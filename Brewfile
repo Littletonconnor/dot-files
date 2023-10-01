@@ -17,6 +17,7 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # packages
+brew "pnpm" # node package manager
 brew "bat" # better cat
 brew "nvm" # node version manager
 brew "cloc" # lines of code counter
