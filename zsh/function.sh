@@ -98,6 +98,7 @@ function npmbenchmark () {
 function test () {
   cd ~/work/frontend/santafe/
   ./t $1
+  cd -
 }
 
 function checkcores () {
