@@ -52,7 +52,7 @@ Got some environment variables you want to set? This is the place to do it.
 A file to store all your handy bash functions.
 
 **zshrc.local**
-A file to store all your local zshrc settings. This file is not tracked by git intentionally. I mainly use this for specific work settings.
+A file to store all your local zshrc settings. We check for this file in the main zshrc file and if it exists source it otherwise we do nothing. This file is not tracked by git intentionally and is useful for custom work settings.
 
 ## tmux
 

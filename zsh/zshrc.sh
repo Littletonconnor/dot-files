@@ -8,7 +8,6 @@ start_time="$(date +%s.%N)"
 sources=(
   "$ZSH_CONFIG/function.sh"
   "$ZSH_CONFIG/aliases.sh"
-  "$ZSH_CONFIG/zshrc.local.sh"
 )
 
 # Sourced alone because they are brew installations.
@@ -20,8 +19,8 @@ source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 # Plugin
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-if [ -f "$ZSH_CONFIG/work.sh" ]; then
-  sources+=("$ZSH_CONFIG/work.sh")
+if [ -f "$ZSH_CONFIG/zshrc.local.sh" ]; then
+  sources+=("$ZSH_CONFIG/zshrc.local.sh")
 fi
 
 for file in "${sources[@]}"

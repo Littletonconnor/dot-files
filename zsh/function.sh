@@ -25,7 +25,7 @@ function grecentchanges () {
   git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- $file) $file"; done | sort -k1,1 -k2,2
 }
 
-cleanBranches() {
+cleanbranches() {
   # Remove all merge and non-merged branches locally except master and dev.
   git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
   git branch --no-merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -D
@@ -35,17 +35,17 @@ cleanBranches() {
 # # # # # # # # # Utility FUNCTIONS # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-function curlHeaders () {
+function curlheaders () {
   # Usage: curlHeaders https://google.com
   curl -I -L --max-redirs 0 "$1"
 }
 
-function curlAllHeaders () {
+function curlallheaders () {
   # Usage: curlAllHeaders https://google.com
   curl curl -sIL "$1"
 }
 
-function curlStatusCode () {
+function curlstatuscode () {
   # Usage: curlStatusCode https://google.com
   curl -I -s -o /dev/null -w '%{http_code}\n' "$1"
 }
@@ -63,9 +63,10 @@ function usedports {
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
-function npm_benchmark () {
+function npmbenchmark () {
   # Example usage:
   # npm_benchmark 10 "test --silent"
+  # Or just run the script n times using bash: for i in {1..5}; do <script>; done
 
   local num_attempts="$1"
   shift
@@ -99,23 +100,23 @@ function test () {
   ./t $1
 }
 
-function checkCores () {
+function checkcores () {
   # Check the number of CPU cored on MacOs or Linux.
   sysctl -n hw.logicalcpu
 }
 
-function checkRam () {
+function checkram () {
   # Check the amount of RAM on MacOs or Linux (bytes).
   sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
 }
 
-function follow_logs() {
+function followlogs() {
   local service_name="$1"
   local log_file="/var/log/$service_name.log"
   tail -f "$log_file"
 }
 
-function copy_file() {
+function copyfile() {
   pbcopy < "$1"
 }
 
