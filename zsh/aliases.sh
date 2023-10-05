@@ -25,3 +25,5 @@ alias pn="pnpm"
 alias px="pnpx"
 
 alias cls="clear"
+
+alias directorysizes="du -sh * | sort -hr"
