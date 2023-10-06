@@ -36,6 +36,7 @@ brew "tree" # pretty-print directory contents
 brew "vim" # Vim (latest)
 brew "zsh" # zsh (latest)
 brew "hyperfine" # benchmarking tool
+brew "httpie" # http client alternative to curl
 
 # brew "rbenv" # ruby version manager
 

@@ -27,3 +27,5 @@ alias px="pnpx"
 alias cls="clear"
 
 alias directorysizes="du -sh * | sort -hr"
+
+alias docs="cat ~/.config/dot-files/docs.md"
