@@ -134,3 +134,7 @@ function untar() {
   # Usage: untar file.tar.gz
   tar -xvzf "$1"
 }
+
+function humanreadablepath () {
+  echo $PATH | tr ':' '\n'
+}
