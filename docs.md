@@ -17,6 +17,9 @@ https www.google.com
 #   - POST for requests with body
 # Here we don’t specify any request data, so both commands will send the same GET request:
 http pie.dev/post hello=world
+
+# Curl headers
+http --follow --headers wealthfront.com
 ```
 
 ### Headers
@@ -53,4 +56,28 @@ If you wish to see the intermediary requests/responses, then use the --all optio
 
 ```bash
 http --follow --all pie.dev/redirect/3
+```
+
+## JQ
+
+- Docs: https://jqlang.github.io/jq/manual/
+
+  JQ is a powerful command-line JSON processor. It's commonly used to parse and manipulate JSON data in the terminal. Here are some examples of how you can use JQ:
+
+```bash
+# Selecting fields
+cat data.json | jq '.name'
+
+# Filtering by Condition:
+cat data.json | jq '.[] | select(.age > 25)'
+
+
+# Iterating Over Arrays:
+cat data.json | jq '.friends[]'
+
+# Combining Operations:
+cat data.json | jq '.[] | select(.age > 25) | .name'
+
+# Pretty Printing:
+cat data.json | jq '. | {name, age}
 ```

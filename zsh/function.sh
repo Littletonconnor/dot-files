@@ -42,6 +42,7 @@ function curlheaders () {
 
 function curlallheaders () {
   # Usage: curlAllHeaders https://google.com
+  # Usage with http: http --follow --headers wealthfront.com
   curl curl -sIL "$1"
 }
 
