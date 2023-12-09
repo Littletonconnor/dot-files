@@ -20,6 +20,9 @@ tap "homebrew/core"
 brew "pnpm" # node package manager
 brew "bat" # better cat
 brew "nvm" # node version manager
+brew "scc" # code line counter
+brew "duf" # better df
+brew "diff-so-fancy" # diff files 
 brew "cloc" # lines of code counter
 brew "tldr" #  Information about commands
 brew "exa" # ls alternative
