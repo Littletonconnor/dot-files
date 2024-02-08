@@ -21,6 +21,16 @@ function glog () {
   git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate
 }
 
+function printpackages () {
+  tree -L 2 -P 'apps|packages|configs' -I 'node_modules|script|tools|githooks|vendor|app|.git'
+}
+
+function findlargefiles () {
+  # Find files larger than 5MB in a directory.
+  # du -sh *
+  find "$1" -type f -size +5M -exec du -h {} + | sort -rh
+}
+
 function grecentchanges () {
   git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- $file) $file"; done | sort -k1,1 -k2,2
 }

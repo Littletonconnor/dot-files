@@ -26,6 +26,7 @@ brew "diff-so-fancy" # diff files
 brew "cloc" # lines of code counter
 brew "tldr" #  Information about commands
 brew "exa" # ls alternative
+brew "hey" # http load testing
 brew "fd" # find alternative
 brew "fzf" # Fuzzy file searcher, used in scripts and in vim
 brew "grep" # grep (latest)

@@ -1,15 +1,19 @@
 {
   // ---- editor ---- //
-  "editor.fontFamily": "Fira Code, Menlo, 'Courier New', monospace",
+  "editor.fontFamily": "'Monaspace Neon Var', 'Monaspace Krypton', 'Monaspace Neon', 'Monaspace Argon Var', 'Monaspace Argon', 'Monaspace Radon', Fira Code, Menlo, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.fontWeight": "500",
   "editor.lineNumbers": "relative",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.inlineSuggest.enabled": true,
+  "editor.stickyScroll.enabled": false,
   "editor.formatOnSave": true,
   "[yaml]": {
     "editor.formatOnSave": false
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   },
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform",
@@ -40,10 +44,6 @@
   },
   "editor.minimap.enabled": false,
   "editor.minimap.size": "fit",
-
-  // ---- workbench ---- //
-  "workbench.colorTheme": "Night Owl (No Italics)",
-  "workbench.iconTheme": "eq-material-theme-icons-light",
   "workbench.editor.wrapTabs": true,
 
   // ---- extensions ---- //
@@ -60,22 +60,81 @@
     "json5"
   ],
   // when working in a mono-repo.
-  // "eslint.workingDirectories": [
-  //   {
-  //     "pattern": "./apps/*/"
-  //   },
-  //   {
-  //     "pattern": "./packages/*/"
-  //   }
-  // ],
+  "eslint.workingDirectories": [
+    {
+      "pattern": "apps/*"
+    },
+    {
+      "pattern": "packages/*"
+    }
+  ],
   "github.copilot.enable": {
     "*": true,
-    "plaintext": false,
+    "plaintext": true,
     "markdown": true,
     "scminput": false,
     "yaml": false,
-    "javascript": true
+    "javascript": true,
+    "go": false,
+    "typescript": true
   },
   // Don't fold lines when moving around in vim.
-  "vim.foldfix": true
+  "vim.foldfix": true,
+  "workbench.colorTheme": "GitHub Light",
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "workbench.sideBar.location": "right",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "totalTypeScript.hiddenTips": [
+    "interface-declaration",
+    "typing-function-parameters",
+    "any-type",
+    "basic-types",
+    "array-type",
+    "union-type",
+    "undefined-keyword",
+    "optional-object-property",
+    "type-alias-declaration",
+    "passing-generics-to-types",
+    "variable-type-annotation",
+    "typeof",
+    "returntype-utility-type",
+    "as-assertion",
+    "ts-object-type",
+    "generic-slots-in-functions"
+  ],
+  "workbench.iconTheme": "material-icon-theme",
+  "cSpell.userWords": [
+    "callouts",
+    "connor",
+    "contentlayer",
+    "Docgen",
+    "docsearch",
+    "dont",
+    "Dumbell",
+    "joda",
+    "Littleton",
+    "lucide",
+    "maincontent",
+    "maxdepth",
+    "Merch",
+    "nocheck",
+    "nums",
+    "PLOC",
+    "Prefunded",
+    "rehype",
+    "shiki",
+    "splitview",
+    "tailwindcss",
+    "testid",
+    "Wealthfront",
+    "xlarge",
+    "xsmall",
+    "xxlarge",
+    "xxsmall",
+    "YODLEE"
+  ],
+  "gitlens.ai.experimental.provider": "openai",
+  "gitlens.ai.experimental.openai.model": "gpt-4-1106-preview",
+  "workbench.settings.openDefaultKeybindings": true
 }
