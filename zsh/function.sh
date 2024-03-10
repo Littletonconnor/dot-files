@@ -1,4 +1,21 @@
 source $HOME/.config/dot-files/zsh/lib.sh
+# fvim -> find and open a file in vim
+function fvim() {
+    if [[ $# -eq 0 ]]; then
+        fd -t f | fzf --header "Open File in Vim" --preview "cat {}" | xargs nvim
+    else
+        fd -t f | fzf --header "Open File in Vim" --preview "cat {}" -q "$@" | xargs nvim
+    fi
+}
+
+# vim -> open vim in the current directory or open the target file
+function vim() {
+    if [[ $# -eq 0 ]]; then
+        nvim .
+    else
+        nvim "$@"
+    fi
+}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #  
@@ -28,6 +45,7 @@ function printpackages () {
 function findlargefiles () {
   # Find files larger than 5MB in a directory.
   # du -sh *
+  # du -h --max-depth=1 | sort -hr
   find "$1" -type f -size +5M -exec du -h {} + | sort -rh
 }
 
