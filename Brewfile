@@ -1,16 +1,16 @@
 # vim:ft=ruby
 
 if OS.mac?
-    # taps
-    tap "homebrew/cask"
-    tap "homebrew/cask-fonts"
-    tap "koekeishiya/formulae"
+  # taps
+  tap "homebrew/cask"
+  tap "homebrew/cask-fonts"
+  tap "koekeishiya/formulae"
 
-    cask "font-fira-code"
-    cask "font-jetbrains-mono"
-    cask "font-cascadia-mono"
-    cask "font-symbols-only-nerd-font"
-    cask "font-recursive-code"
+  cask "font-fira-code"
+  cask "font-jetbrains-mono"
+  cask "font-cascadia-mono"
+  cask "font-symbols-only-nerd-font"
+  cask "font-recursive-code"
 end
 
 tap "homebrew/bundle"
@@ -22,9 +22,10 @@ brew "bat" # better cat
 brew "nvm" # node version manager
 brew "scc" # code line counter
 brew "duf" # better df
-brew "diff-so-fancy" # diff files 
+brew "diff-so-fancy" # diff files
 brew "cloc" # lines of code counter
 brew "tldr" #  Information about commands
+brew "zoxide" #  A faster way to navigate your filesystem
 brew "exa" # ls alternative
 brew "hey" # http load testing
 brew "fd" # find alternative
