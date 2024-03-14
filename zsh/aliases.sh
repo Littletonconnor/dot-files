@@ -28,4 +28,4 @@ alias cls="clear"
 
 alias directorysizes="du -sh * | sort -hr"
 
-alias docs="cat ~/.config/dot-files/docs.md"
+alias sb="vim ~/personal/brain/"
