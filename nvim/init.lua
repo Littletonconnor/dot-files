@@ -238,38 +238,15 @@ require('lazy').setup({
   -- "gcc" after highlighting a block to comment or uncomment that entire block
   { 'numToStr/Comment.nvim', opts = {} },
   {
-    'aserowy/tmux.nvim',
+    'stevearc/oil.nvim',
+    opts = {},
     config = function()
-      require('tmux').setup {
-        -- overwrite default configuration
-        -- here, e.g. to enable default bindings
-        copy_sync = {
-          -- enables copy sync and overwrites all register actions to
-          -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
-          enable = true,
-          -- TMUX >= 3.2: yanks (and deletes) will get redirected to system clipboard
-          redirect_to_clipboard = true,
-          -- offset controls where the highlight starts from, set to 1 to start from the character under the cursor
-          offset_x = 1,
-          -- sync clipboard overwrites vim.g.clipboard to handle * and +
-          sync_clipboard = true,
-          -- syncs deletes with tmux clipboard as well, it is adviced to keep this on
-          sync_deletes = true,
-          -- syncs the unnamed register as well
-          sync_unnamed_register = true,
-          -- syncs the command line over to tmux on :write or :make
-          sync_cmdline = true,
-        },
-        navigation = {
-          -- enables default keybindings (C-hjkl) for normal mode
-          enable_default_keybindings = true,
-        },
-        resize = {
-          -- enables default keybindings (A-hjkl) for normal mode
-          enable_default_keybindings = true,
-        },
-      }
+      require('oil').setup()
+      vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     end,
+  },
+  {
+    'aserowy/tmux.nvim',
   },
   {
     'stevearc/conform.nvim',
@@ -296,7 +273,20 @@ require('lazy').setup({
     },
   },
   {
+    'nvim-web-devicons',
+  },
+  {
     'github/copilot.vim',
+  },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup()
+
+      vim.cmd.colorscheme 'catppuccin'
+    end,
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -686,7 +676,6 @@ require('lazy').setup({
       }
     end,
   },
-
   { -- Autoformat
     'stevearc/conform.nvim',
     opts = {
@@ -799,14 +788,6 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme = 'catppucin-mocha'
-    end,
-  },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -847,16 +828,7 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
-  {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('oil').setup()
-      vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-    end,
-  },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
