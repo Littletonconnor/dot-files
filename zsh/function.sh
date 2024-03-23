@@ -1,4 +1,5 @@
 source $HOME/.config/dot-files/zsh/lib.sh
+
 # fvim -> find and open a file in vim
 function fvim() {
     if [[ $# -eq 0 ]]; then
