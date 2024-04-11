@@ -21,6 +21,7 @@ brew "pnpm" # node package manager
 brew "bat" # better cat
 brew "nvm" # node version manager
 brew "scc" # code line counter
+brew "imagemagick" # resize images
 brew "duf" # better df
 brew "diff-so-fancy" # diff files
 brew "cloc" # lines of code counter
