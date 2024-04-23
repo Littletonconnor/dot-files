@@ -126,7 +126,7 @@ function npmbenchmark () {
 }
 
 function test () {
-  cd ~/work/frontend/santafe/
+  cd ~/git/frontend/santafe/
   ./t $1
   cd -
 }
