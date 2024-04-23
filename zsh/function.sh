@@ -160,6 +160,11 @@ function kill_port() {
   kill -9 $(lsof -t -i:$1)
 }
 
+function resize() {
+  # magick ~/Desktop/test.png -resize 650x ~/Desktop/test.png
+  magick "$1" -resize 650x "$1"
+}
+
 function untar() {
   # Usage: untar file.tar.gz
   tar -xvzf "$1"
