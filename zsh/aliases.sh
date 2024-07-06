@@ -2,6 +2,8 @@ alias dotfiles="code ~/.config/dot-files"
 
 alias grep="grep --color=auto"
 
+alias fzfi='code $(fzf -m --preview="bat --color=always {}")'
+
 alias zshconfig="code ~/.zshrc"
 
 alias gs="git status"

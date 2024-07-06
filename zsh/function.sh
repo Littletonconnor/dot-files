@@ -151,8 +151,36 @@ function copyfile() {
   pbcopy < "$1"
 }
 
-function sortpackagejson () {
-  npx sort-package-json
+function tobytes() {
+  if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <number> <unit>"
+    exit 1
+  fi
+
+  number=$1
+  unit=$2
+
+  case "$unit" in
+    KB)
+      result=$(echo "$number * 1024" | bc)
+      echo "$number KB is $result Bytes"
+      ;;
+    MB)
+      result=$(echo "$number * 1024 * 1024" | bc)
+      echo "$number MB is $result Bytes"
+      ;;
+    GB)
+      result=$(echo "$number * 1024 * 1024 * 1024" | bc)
+      echo "$number GB is $result Bytes"
+      ;;
+    *)
+      echo "Invalid unit. Please use 'KB', 'MB', or 'GB'."
+      ;;
+  esac
+}
+
+function ip_location () {
+  curl https://ipinfo.io/"$1"
 }
 
 function kill_port() {
