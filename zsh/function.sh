@@ -19,7 +19,7 @@ function vim() {
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #  
+# # # # # # # # # # # GIT FUNCTIONS # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 function acp() {
   # Usage: acp "commit message"
@@ -61,7 +61,7 @@ cleanbranches() {
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # Utility FUNCTIONS # # # # # # # #  
+# # # # # # # # # Utility FUNCTIONS # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 function curlheaders () {
@@ -89,7 +89,7 @@ function usedports {
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # # # OTHER FUNCTIONS # # # # # # # # #  
+# # # # # # # # # # OTHER FUNCTIONS # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
@@ -105,16 +105,16 @@ function npmbenchmark () {
 
   for ((i = 1; i <= num_attempts; i++)); do
     echo "Running test attempt $i"
-    
+
     start_time="$(date +%s.%N)"
     npm run $test_command
     exit_status=$?
     end_time="$(date +%s.%N)"
-    
+
     elapsed_time="$(bc <<<"$end_time-$start_time")"
     total_elapsed_time=$(bc <<<"$total_elapsed_time+$elapsed_time")
     fancy_echo "Test attempt $i took $elapsed_time s" "green"
-    
+
     if [[ "$exit_status" != 0 ]]; then
       fancy_echo "Failed after $i attempts" "red"
       break
@@ -126,7 +126,7 @@ function npmbenchmark () {
 }
 
 function test () {
-  cd ~/git/frontend/santafe/
+  cd ~/Sites/frontend/santafe/
   ./t $1
   cd -
 }
@@ -139,12 +139,6 @@ function checkcores () {
 function checkram () {
   # Check the amount of RAM on MacOs or Linux (bytes).
   sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
-}
-
-function followlogs() {
-  local service_name="$1"
-  local log_file="/var/log/$service_name.log"
-  tail -f "$log_file"
 }
 
 function copyfile() {
