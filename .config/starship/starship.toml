@@ -1,7 +1,10 @@
+# Starship configuration
+
 add_newline = false
-format = """$directory$character"""
-right_format ="""$all"""
+
+format = "$directory$character"
+right_format = "$all"
 
 [directory]
 truncation_length = 8
-truncation_symbol = '../'
+truncation_symbol = "../"

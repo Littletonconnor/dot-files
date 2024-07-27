@@ -12,10 +12,9 @@ sources=(
 
 # Sourced alone because they are brew installations.
 # Must ran install script before: `./install.sh homebrew`
-eval "$(starship init zsh)"
-export STARSHIP_CONFIG=../starship/starship.toml
-# source "/opt/homebrew/opt/spaceship/spaceship.zsh"
-# source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source "/opt/homebrew/opt/spaceship/spaceship.zsh"
+export STARSHIP_CONFIG=$HOME/.config/dot-files/.config/starship/starship.toml
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
