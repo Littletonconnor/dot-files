@@ -3,7 +3,7 @@ alias dotfiles="code ~/.config/dot-files"
 alias grep="grep --color=auto"
 
 # Fzf
-alias fzfi='code $(fzf -m --preview="bat --color=always {}")'
+alias fzfi='nvim $(fzf -m --preview="bat --color=always {}")'
 
 # Git
 alias gs="git status"
