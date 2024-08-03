@@ -5,11 +5,11 @@ return {
       char = { "┆" },
       virtcolumn = "80",
       highlight = { "NonText" },
-    }
+    },
   },
   {
     "folke/noice.nvim",
-    enabled = false,
+    enabled = true,
   },
   {
     "j-hui/fidget.nvim",

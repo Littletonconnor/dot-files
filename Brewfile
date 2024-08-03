@@ -20,6 +20,7 @@ tap "homebrew/core"
 brew "pnpm" # node package manager
 brew "bat" # better cat
 brew "nvm" # node version manager
+brew "yazi" # Awesome file manager
 brew "scc" # code line counter
 brew "imagemagick" # resize images
 brew "duf" # better df
