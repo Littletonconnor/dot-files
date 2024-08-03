@@ -121,9 +121,9 @@ function humanreadablepath() {
   echo $PATH | tr ':' '\n'
 }
 
-function syncConfigs() {
-  cp -r ~/.config/dot-files/.config/nvim/ ~/.config
-  cp -r ~/.config/dot-files/.config/starship/ ~/.config
-  cp -r ~/.config/dot-files/.config/tmux/ ~/.config
-  cp -r ~/.config/dot-files/.config/kitty/ ~/.config
+function sync_configs() {
+  rsync -av --delete ~/.config/dot-files/.config/nvim/* /.config/
+  rsync -av --delete ~/.config/dot-files/.config/starship/* /.config/
+  rsync -av --delete ~/.config/dot-files/.config/tmux/* /.config/
+  rsync -av --delete ~/.config/dot-files/.config/kitty/* /.config/
 }
