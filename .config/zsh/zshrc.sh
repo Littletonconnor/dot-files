@@ -18,6 +18,9 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
+# Install zoxide
+eval "$(zoxide init zsh)"
+
 if [ -f "$ZSH_CONFIG/zshrc.local.sh" ]; then
   sources+=("$ZSH_CONFIG/zshrc.local.sh")
 fi
