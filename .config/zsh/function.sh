@@ -122,8 +122,8 @@ function humanreadablepath() {
 }
 
 function sync_configs() {
-  rsync -av --delete ~/.config/dot-files/.config/nvim/* /.config/
-  rsync -av --delete ~/.config/dot-files/.config/starship/* /.config/
-  rsync -av --delete ~/.config/dot-files/.config/tmux/* /.config/
-  rsync -av --delete ~/.config/dot-files/.config/kitty/* /.config/
+  rsync -av --delete ~/.config/dot-files/.config/nvim/* ~/.config/nvim
+  rsync -av --delete ~/.config/dot-files/.config/starship/* ~/.config/starship
+  rsync -av --delete ~/.config/dot-files/.config/tmux/* ~/.config/tmux
+  rsync -av --delete ~/.config/dot-files/.config/kitty/* ~/.config/kitty
 }

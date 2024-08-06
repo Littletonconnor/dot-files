@@ -1,3 +1,3 @@
 # 💤 My Nvim Config
 
-Welcome!
+Welcome!!
