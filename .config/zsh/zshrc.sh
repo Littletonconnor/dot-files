@@ -10,6 +10,8 @@ sources=(
   "$ZSH_CONFIG/aliases.sh"
 )
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Sourced alone because they are brew installations.
 # Must ran install script before: `./install.sh homebrew`
 source "/opt/homebrew/opt/spaceship/spaceship.zsh"
