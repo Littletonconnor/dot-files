@@ -20,6 +20,15 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
+# Install zoxide
+eval "$(zoxide init zsh)"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
 if [ -f "$ZSH_CONFIG/zshrc.local.sh" ]; then
   sources+=("$ZSH_CONFIG/zshrc.local.sh")
 fi
