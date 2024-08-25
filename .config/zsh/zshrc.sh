@@ -8,26 +8,14 @@ start_time="$(date +%s.%N)"
 sources=(
   "$ZSH_CONFIG/function.sh"
   "$ZSH_CONFIG/aliases.sh"
+  "$ZSH_CONFIG/initializers.sh"
 )
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Sourced alone because they are brew installations.
 # Must ran install script before: `./install.sh homebrew`
 source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 export STARSHIP_CONFIG=$HOME/.config/dot-files/.config/starship/starship.toml
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
-
-# Install zoxide
-eval "$(zoxide init zsh)"
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 
 if [ -f "$ZSH_CONFIG/zshrc.local.sh" ]; then
   sources+=("$ZSH_CONFIG/zshrc.local.sh")
