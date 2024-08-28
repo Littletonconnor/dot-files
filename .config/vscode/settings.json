@@ -1,247 +1,114 @@
 {
-<<<<<<< Updated upstream
-  // ---- editor ---- //
-  "editor.fontFamily": "'Monaspace Neon Var', 'Monaspace Krypton', 'Monaspace Neon', 'Monaspace Argon Var', 'Monaspace Argon', 'Monaspace Radon', Fira Code, Menlo, 'Courier New', monospace",
-  "editor.fontLigatures": true,
-  "editor.fontSize": 13,
-  "editor.fontWeight": "500",
-  "editor.lineNumbers": "relative",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.inlineSuggest.enabled": true,
-  "editor.stickyScroll.enabled": false,
-  "editor.formatOnSave": true,
-  "[yaml]": {
-    "editor.formatOnSave": false
-  },
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
-  "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
-  },
-  "[terraform-vars]": {
-    "editor.defaultFormatter": "hashicorp.terraform",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
-  },
+  /**
+   * Better Defaults
+   **/
+  "editor.copyWithSyntaxHighlighting": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.emptySelectionClipboard": false,
+  "workbench.editor.enablePreview": false,
+  "window.newWindowDimensions": "inherit",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "files.trimTrailingWhitespace": true,
+  "diffEditor.renderSideBySide": false,
+  "editor.snippetSuggestions": "top",
+  "window.nativeFullScreen": false,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "workbench.sideBar.location": "right",
+  "workbench.statusBar.visible": false,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.showTabs": "multiple",
+  "editor.minimap.enabled": false,
+  // "editor.lineNumbers": "off",
+
+  /**
+   * Silence The Noise
+   */
+  "breadcrumbs.enabled": false,
+  "scm.diffDecorations": "all",
+  "editor.hover.enabled": false,
+  "editor.matchBrackets": "never",
+  "workbench.tips.enabled": false,
+  "editor.colorDecorators": false,
+  "git.decorations.enabled": true,
+  "workbench.startupEditor": "none",
+  "editor.lightbulb.enabled": "off",
+  "editor.selectionHighlight": false,
+  "editor.overviewRulerBorder": false,
+  "editor.renderLineHighlight": "none",
+  "editor.occurrencesHighlight": "off",
+  "problems.decorations.enabled": false,
+  "editor.renderControlCharacters": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.gotoLocation.multipleReferences": "goto",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.gotoLocation.multipleDeclarations": "goto",
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "editor.gotoLocation.multipleImplementations": "goto",
+  "editor.gotoLocation.multipleTypeDefinitions": "goto",
+
+  /**
+   * Typography
+   **/
+  "workbench.colorTheme": "One Dark Pro",
+  "editor.fontFamily": "Fira Code, 'Monaspace Neon Var', 'Monaspace Krypton', 'Monaspace Neon', 'Monaspace Argon Var', 'Monaspace Argon', 'Monaspace Radon', Fira Code, Menlo, 'Courier New', monospace",
+  "editor.fontSize": 12,
+  "editor.lineHeight": 0,
+  "editor.suggestFontSize": 13,
+  "editor.suggestLineHeight": 28,
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.lineHeight": 1.5,
+
+  /**
+   * Find
+   **/
+  "search.useIgnoreFiles": false,
   "search.exclude": {
-    "**/.git": true,
-    "**/.github": true,
-    "**/.output": true,
-    "**/.pnpm": true,
-    "**/.vscode": true,
-    "**/.yarn": true,
-    "**/bower_components": true,
-    "**/dist/**": true,
-    "**/logs": true,
+    // Hide everything in /vendor except laravel and liveware
+    "**/vendor/{[^l],?[^ai]}*": true,
+    // Hide everything in /public
+    "**/public": true,
     "**/node_modules": true,
-    "**/out/**": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/_ide_helper.php": true,
     "**/package-lock.json": true,
     "**/pnpm-lock.yaml": true,
-    "**/tmp": true,
-    "**/yarn.lock": true
+    "storage": true,
   },
-  "editor.minimap.enabled": false,
-  "editor.minimap.size": "fit",
-  "workbench.editor.wrapTabs": true,
 
-  // ---- extensions ---- //
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact",
-    "vue",
-    "html",
-    "markdown",
-    "json",
-    "jsonc",
-    "json5"
-  ],
-  // when working in a mono-repo.
-  "eslint.workingDirectories": [
-    {
-      "pattern": "apps/*"
-    },
-    {
-      "pattern": "packages/*"
-    }
-  ],
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": true,
-    "markdown": true,
-    "scminput": false,
-    "yaml": false,
-    "javascript": true,
-    "go": false,
-    "typescript": true
+  /**
+   * Code
+   **/
+  // Include "-" in word selection.
+  "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+  "emmet.includeLanguages": {
+    "blade": "html",
+    "vue-html": "html",
+    "vue": "html"
   },
-  // Don't fold lines when moving around in vim.
-  "vim.foldfix": true,
-  "workbench.colorTheme": "GitHub Light",
-  "git.confirmSync": false,
-  "git.autofetch": true,
-  "workbench.sideBar.location": "right",
-  "diffEditor.ignoreTrimWhitespace": false,
-  "totalTypeScript.hiddenTips": [
-    "interface-declaration",
-    "typing-function-parameters",
-    "any-type",
-    "basic-types",
-    "array-type",
-    "union-type",
-    "undefined-keyword",
-    "optional-object-property",
-    "type-alias-declaration",
-    "passing-generics-to-types",
-    "variable-type-annotation",
-    "typeof",
-    "returntype-utility-type",
-    "as-assertion",
-    "ts-object-type",
-    "generic-slots-in-functions"
-  ],
-  "workbench.iconTheme": "material-icon-theme",
-  "cSpell.userWords": [
-    "callouts",
-    "connor",
-    "contentlayer",
-    "Docgen",
-    "docsearch",
-    "dont",
-    "Dumbell",
-    "joda",
-    "Littleton",
-    "lucide",
-    "maincontent",
-    "maxdepth",
-    "Merch",
-    "nocheck",
-    "nums",
-    "PLOC",
-    "Prefunded",
-    "rehype",
-    "shiki",
-    "splitview",
-    "tailwindcss",
-    "testid",
-    "Wealthfront",
-    "xlarge",
-    "xsmall",
-    "xxlarge",
-    "xxsmall",
-    "YODLEE"
-  ],
-  "gitlens.ai.experimental.provider": "openai",
-  "gitlens.ai.experimental.openai.model": "gpt-4-1106-preview",
-  "workbench.settings.openDefaultKeybindings": true
+  "files.associations": {
+    ".php_cs": "php",
+    ".php_cs.dist": "php"
+  },
+
+  /**
+  * Prettier
+  **/
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+  "editor.guides.indentation": false,
+  "workbench.activityBar.location": "hidden",
+
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false,
+  "editor.stickyTabStops": true,
+  "editor.tabSize": 2,
+
+  /**
+    Vim
+  */
+  "vim.foldfix": true
 }
-=======
-    /**
-     * Better Defaults
-     **/
-    "editor.copyWithSyntaxHighlighting": false,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "editor.emptySelectionClipboard": false,
-    "workbench.editor.enablePreview": false,
-    "window.newWindowDimensions": "inherit",
-    "editor.multiCursorModifier": "ctrlCmd",
-    "files.trimTrailingWhitespace": true,
-    "diffEditor.renderSideBySide": false,
-    "editor.snippetSuggestions": "top",
-    "editor.detectIndentation": false,
-    "window.nativeFullScreen": false,
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    "workbench.sideBar.location": "right",
-    "workbench.statusBar.visible": false,
-    "workbench.editor.showTabs": "single",
-    "editor.minimap.enabled": false,
-    // "editor.lineNumbers": "off",
-
-    /**
-     * Silence The Noise
-     */
-    "breadcrumbs.enabled": false,
-    "scm.diffDecorations": "none",
-    "editor.hover.enabled": false,
-    "editor.matchBrackets": "never",
-    "workbench.tips.enabled": false,
-    "editor.colorDecorators": false,
-    "git.decorations.enabled": false,
-    "workbench.startupEditor": "none",
-    "editor.lightbulb.enabled": "off",
-    "editor.selectionHighlight": false,
-    "editor.overviewRulerBorder": false,
-    "editor.renderLineHighlight": "none",
-    "editor.occurrencesHighlight": "off",
-    "problems.decorations.enabled": false,
-    "editor.renderControlCharacters": false,
-    "editor.hideCursorInOverviewRuler": true,
-    "editor.gotoLocation.multipleReferences": "goto",
-    "editor.gotoLocation.multipleDefinitions": "goto",
-    "editor.gotoLocation.multipleDeclarations": "goto",
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "editor.gotoLocation.multipleImplementations": "goto",
-    "editor.gotoLocation.multipleTypeDefinitions": "goto",
-
-    /**
-     * Typography
-     **/
-    "workbench.colorTheme": "Palenight (Mild Contrast)",
-    "editor.fontFamily": "'Monaspace Neon Var', 'Monaspace Krypton', 'Monaspace Neon', 'Monaspace Argon Var', 'Monaspace Argon', 'Monaspace Radon', Fira Code, Menlo, 'Courier New', monospace",
-    "editor.fontSize": 12,
-    "editor.lineHeight": 0,
-    "editor.suggestFontSize": 13,
-    "editor.suggestLineHeight": 28,
-    "terminal.integrated.fontSize": 13,
-    "terminal.integrated.lineHeight": 1.5,
-
-    /**
-     * Find
-     **/
-    "search.useIgnoreFiles": false,
-    "search.exclude": {
-      // Hide everything in /vendor except laravel and liveware
-      "**/vendor/{[^l],?[^ai]}*": true,
-      // Hide everything in /public
-      "**/public": true,
-      "**/node_modules": true,
-      "**/dist": true,
-      "**/_ide_helper.php": true,
-      "**/package-lock.json": true,
-      "**/pnpm-lock.yaml": true,
-      "storage": true
-    },
-
-    /**
-     * Code
-     **/
-    // Include "-" in word selection.
-    "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
-    "emmet.includeLanguages": {
-      "blade": "html",
-      "vue-html": "html",
-      "vue": "html"
-    },
-    "files.associations": {
-      ".php_cs": "php",
-      ".php_cs.dist": "php"
-    },
-
-    /**
-     * Prettier
-     **/
-    "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true
-    },
-    "prettier.requireConfig": true,
-    "prettier.useEditorConfig": false,
-    "editor.guides.indentation": false,
-    "workbench.activityBar.location": "hidden"
-  }
->>>>>>> Stashed changes
