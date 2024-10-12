@@ -20,6 +20,10 @@ function grecentchanges() {
   git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- $file) $file"; done | sort -k1,1 -k2,2
 }
 
+function gitlog() {
+  git log -n 5 --pretty=format:"%h %ad %s" --date=short "$1"
+}
+
 function cleanbranches() {
   # Remove all merge and non-merged branches locally except master and dev.
   git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
