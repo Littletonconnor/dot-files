@@ -252,6 +252,11 @@
         "key": "cmd+k cmd+i",
         "command": "namespaceResolver.import"
     },
+	{
+        "key": "cmd+e",
+        "command": "editor.action.rename"
+    },
+    { "key": "cmd+shift+a",         "command": "references-view.findReferences"},
 
     /**
     * Project Switching
