@@ -1,11 +1,14 @@
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Install zoxide
+# Initialize Zoxide
 eval "$(zoxide init zsh)"
 
-# Go (run brew install goenv first)
+# Initialize GO
 eval "$(goenv init -)"
+
+# Initialize Starship
+eval "$(starship init zsh)"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
