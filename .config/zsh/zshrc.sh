@@ -13,8 +13,6 @@ sources=(
 
 # Sourced alone because they are brew installations.
 # Must ran install script before: `./install.sh homebrew`
-source "/opt/homebrew/opt/spaceship/spaceship.zsh"
-export STARSHIP_CONFIG=$HOME/.config/dot-files/.config/starship/starship.toml
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 if [ -f "$ZSH_CONFIG/zshrc.local.sh" ]; then

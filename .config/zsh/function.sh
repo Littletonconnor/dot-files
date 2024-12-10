@@ -12,7 +12,7 @@ function acp() {
 function findlargefiles() {
   # Find files larger than 5MB in a directory.
   # du -sh *
-  # du -h --max-depth=1 | sort -hr
+  # du -h -d 1 | sort -hrb
   find "$1" -type f -size +5M -exec du -h {} + | sort -rh
 }
 
