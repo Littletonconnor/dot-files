@@ -1,15 +1,10 @@
-alias dotfiles="code ~/.config/dot-files"
-
 alias grep="grep --color=auto"
-
-# Fzf
-alias fzfi='nvim $(fzf -m --preview="bat --color=always {}")'
 
 # Git
 alias gs="git status"
 alias ga="git add ."
 alias gce='git commit --allow-empty -m "Empty commit"'
-alias glog="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate"
+alias git-log="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate -n 10"
 
 # pnpm
 alias pn="pnpm"
@@ -19,4 +14,7 @@ alias px="pnpx"
 alias e="exa -lah"
 alias cat="bat"
 alias cls="clear"
-alias directorysizes="du -sh * | sort -hr"
+alias directory-sizes="du -sh * | sort -hr"
+
+# Zelijj
+alias z="zellij"

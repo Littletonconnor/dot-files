@@ -1,7 +1,7 @@
 # the main RC file (will be linked to ~/.zshrc)
 
-source $HOME/.config/dot-files/.config/zsh/environment.sh
-source $ZSH_CONFIG/lib.sh
+source "$HOME"/.config/dot-files/.config/zsh/environment.sh
+source "$ZSH_CONFIG"/lib.sh
 
 start_time="$(date +%s.%N)"
 

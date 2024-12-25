@@ -1,5 +1,22 @@
-function toggle_kitty_transparency() {
-  sh ~/.config/kitty/toggle-transparency.sh
+# fvim -> find and open a file in vim
+function fvim() {
+  if [[ $# -eq 0 ]]; then
+    fd -t f | fzf --header "Open File in Vim" --preview "cat {}" | xargs nvim
+  else
+    fd -t f | fzf --header "Open File in Vim" --preview "cat {}" -q "$@" | xargs nvim
+  fi
+}
+
+function dir-buddy() {
+  # Combine directories from ~/Sites and ~/.config
+  TARGET_DIR=$(ls -d ~/Sites/*/ ~/.config/*/ 2>/dev/null | fzf --prompt="Select a directory: ")
+
+  # If a directory was selected, navigate to it
+  if [ -n "$TARGET_DIR" ]; then
+    cd "$TARGET_DIR" || exit
+  else
+    echo "No directory selected."
+  fi
 }
 
 function acp() {
@@ -17,7 +34,7 @@ function findlargefiles() {
 }
 
 function grecentchanges() {
-  git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- $file) $file"; done | sort -k1,1 -k2,2
+  git ls-tree -r --name-only HEAD "$1" | while read file; do echo "$(git log -1 --pretty=format:"%ad %h %an: %s" --date=format:'%Y-%m-%d' -- "$file") $file"; done | sort -k1,1 -k2,2
 }
 
 function gitlog() {
@@ -26,8 +43,8 @@ function gitlog() {
 
 function cleanbranches() {
   # Remove all merge and non-merged branches locally except master and dev.
-  git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
-  git branch --no-merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -D
+  git branch --merged | grep -e -v "(^\*|master|main|dev)" | xargs git branch -d
+  git branch --no-merged | grep -e -v "(^\*|master|main|dev)" | xargs git branch -D
 }
 
 function curlheaders() {
@@ -55,9 +72,9 @@ function usedports {
 }
 
 function test() {
-  cd ~/Sites/santafe/
-  ./t $1
-  cd -
+  cd ~/Sites/santafe/ || exit
+  ./t "$1"
+  cd - || exit
 }
 
 function checkcores() {
@@ -68,10 +85,6 @@ function checkcores() {
 function checkram() {
   # Check the amount of RAM on MacOs or Linux (bytes).
   sysctl hw.memsize | awk '{print $2/1073741824 " GB"}'
-}
-
-function copyfile() {
-  pbcopy <"$1"
 }
 
 function tobytes() {
@@ -108,12 +121,7 @@ function ip_location() {
 
 function kill_port() {
   # Usage: kill_port 2019 -> kills process running on port 2019 `caddy`
-  kill -9 $(lsof -t -i:$1)
-}
-
-function resize() {
-  # magick ~/Desktop/test.png -resize 650x ~/Desktop/test.png
-  magick "$1" -resize 650x "$1"
+  kill -9 $(lsof -t -i:"$1")
 }
 
 function untar() {
@@ -122,7 +130,7 @@ function untar() {
 }
 
 function humanreadablepath() {
-  echo $PATH | tr ':' '\n'
+  echo "$PATH" | tr ':' '\n'
 }
 
 function sync_configs() {
