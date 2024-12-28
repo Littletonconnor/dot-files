@@ -4,7 +4,7 @@ alias grep="grep --color=auto"
 alias gs="git status"
 alias ga="git add ."
 alias gce='git commit --allow-empty -m "Empty commit"'
-alias git-log="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate -n 10"
+alias glog="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate -n 10"
 
 # pnpm
 alias pn="pnpm"
