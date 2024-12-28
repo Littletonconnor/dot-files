@@ -92,16 +92,6 @@ return {
 						},
 					},
 				},
-				marksman = {},
-				ocamllsp = {
-					manual_install = true,
-					cmd = { "dune", "exec", "ocamllsp" },
-					settings = {
-						codelens = { enable = true },
-						inlayHints = { enable = true },
-						syntaxDocumentation = { enable = true },
-					},
-				},
 				nil_ls = {},
 				pyright = {},
 				sqlls = {},
