@@ -15,6 +15,3 @@ alias e="exa -lah"
 alias cat="bat"
 alias cls="clear"
 alias directory-sizes="du -sh * | sort -hr"
-
-# Zelijj
-alias z="zellij"

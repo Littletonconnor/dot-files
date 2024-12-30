@@ -19,88 +19,6 @@ function dir-buddy() {
   fi
 }
 
-<<<<<<< Updated upstream
-function acp() {
-  # Usage: acp "commit message"
-  git add .
-  git commit -m "$1"
-  git push origin HEAD
-||||||| Stash base
-# Function to create notes in TIL or ONCALL directories
-notes() {
-  # Define the options
-  local options=("TIL" "ONCALL")
-
-  # Prompt the user to select an option
-  echo "Select the type of note to create:"
-  select opt in "${options[@]}"; do
-    case $opt in
-    "TIL")
-      # Define the directory for TIL notes
-      local til_dir=~/Sites/notes/til
-
-      # Create the directory if it doesn't exist
-      mkdir -p "$til_dir"
-
-      # Get the current date in YYYY-MM-DD format
-      local current_date=$(date +"%Y-%m-%d")
-
-      # Define the file path
-      local file_path="$til_dir/${current_date}.md"
-
-      # Check if the file already exists
-      if [[ -e "$file_path" ]]; then
-        echo "❗ A TIL note for today already exists: $file_path"
-      else
-        # Create the Markdown file
-        touch "$file_path"
-        echo "✅ Created TIL note: $file_path"
-
-        # Open the file in your default editor
-        vim "$file_path"
-      fi
-      ;;
-    "ONCALL")
-      # Define the directory for ONCALL notes
-      local oncall_dir=~/Sites/notes/on-call
-
-      # Create the directory if it doesn't exist
-      mkdir -p "$oncall_dir"
-
-      # Prompt the user for the file name
-      read -rp "📝 Enter the name of the ONCALL note: " filename
-
-      # Sanitize the filename: replace spaces with dashes
-      filename=${filename// /-}
-
-      # Ensure the filename ends with .md
-      if [[ "$filename" != *.md ]]; then
-        filename="${filename}.md"
-      fi
-
-      # Define the file path
-      local file_path="$oncall_dir/$filename"
-
-      # Check if the file already exists
-      if [[ -e "$file_path" ]]; then
-        echo "❗ An ONCALL note named '$filename' already exists: $file_path"
-      else
-        # Create the Markdown file
-        touch "$file_path"
-        echo "✅ Created ONCALL note: $file_path"
-
-        # Open the file in your default editor
-        vim "$file_path"
-      fi
-      ;;
-    *)
-      echo "❌ Invalid option selected. Please choose 1 or 2."
-      ;;
-    esac
-    # Exit the select loop after handling the option
-    break
-  done
-=======
 # Function to create notes in TIL or ONCALL directories
 notes() {
   # Define the options
@@ -175,7 +93,6 @@ notes() {
     # Exit the select loop after handling the option
     break
   done
->>>>>>> Stashed changes
 }
 
 function findlargefiles() {
