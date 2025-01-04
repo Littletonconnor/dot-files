@@ -19,8 +19,179 @@ function dir-buddy() {
   fi
 }
 
+function tmux-buddy() {
+  # Define the choices (renamed from "options" to "buddy_options")
+  local buddy_options=$'tmux-sessionizer\ntmux-programming\ntmux-oncall'
+
+  # Use fzf to select an option
+  local selected
+  selected=$(echo "$buddy_options" | fzf --prompt="Select a tmux session: ")
+
+  # Check the selection and call the corresponding function
+  case "$selected" in
+  tmux-sessionizer)
+    tmux_sessionizer
+    ;;
+  tmux-programming)
+    tmux_programming
+    ;;
+  tmux_oncall)
+    tmux-oncall
+    ;;
+  *)
+    echo "Invalid selection or cancelled."
+    ;;
+  esac
+}
+
+function tmux_sessionizer() {
+  if [[ $# -eq 1 ]]; then
+    selected=$1
+  else
+    selected=$(find ~/Sites ~/personal ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
+  fi
+
+  if [[ -z $selected ]]; then
+    exit 0
+  fi
+
+  selected_name=$(basename "$selected" | tr . _)
+  tmux_running=$(pgrep tmux)
+
+  if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    exit 0
+  fi
+
+  if ! tmux has-session -t=$selected_name 2>/dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+  fi
+
+  if [[ -z $TMUX ]]; then
+    # Attach to the session if not in tmux
+    tmux attach-session -t $selected_name
+  else
+    # Switch client if already in tmux
+    tmux switch-client -t $selected_name
+  fi
+}
+
+function tmux_programming() {
+  local session_name="programming"
+  local project_dir="$HOME/Sites/santafe"
+
+  # If the session already exists, just attach (or switch if you're inside tmux)
+  if tmux has-session -t "$session_name" 2>/dev/null; then
+    if [ -n "$TMUX" ]; then
+      tmux switch-client -t "$session_name"
+    else
+      tmux attach-session -t "$session_name"
+    fi
+    return
+  fi
+
+  ##################################################################
+  # 1) Create a new session (detached) – starts with window index 0
+  ##################################################################
+  tmux new-session -d -s "$session_name" -c "$project_dir"
+
+  ##################################################################
+  # 2) Set base-index (and pane-base-index) to 1 *for this session*
+  ##################################################################
+  tmux set-option -t "$session_name" base-index 1
+  tmux set-option -t "$session_name" pane-base-index 1
+
+  ##################################################################
+  # 3) Create the "Editor" window at index 1 and run `nvim .`
+  ##################################################################
+  tmux new-window -t "$session_name:1" -n "Editor" -c "$project_dir"
+  tmux send-keys -t "$session_name:1" "nvim ." C-m
+
+  ##################################################################
+  # 4) Create the "Shell" window at index 2
+  ##################################################################
+  tmux new-window -t "$session_name:2" -n "Shell" -c "$project_dir"
+
+  ##################################################################
+  # 5) Create the "Split" window at index 3, then split into 4 panes
+  ##################################################################
+  tmux new-window -t "$session_name:3" -n "Split" -c "$project_dir"
+  tmux split-window -t "$session_name:3" -h -c "$project_dir"
+  tmux split-window -t "$session_name:3" -v -c "$project_dir"
+  tmux select-pane -t "$session_name:3"
+  tmux split-window -t "$session_name:3" -v -c "$project_dir"
+  tmux select-layout -t "$session_name:3" tiled
+
+  ##################################################################
+  # 7) Focus back on window 1 (Editor) and attach
+  ##################################################################
+  tmux select-window -t "$session_name:1"
+
+  if [ -n "$TMUX" ]; then
+    tmux switch-client -t "$session_name"
+  else
+    tmux attach-session -t "$session_name"
+  fi
+}
+
+function tmux_programming() {
+  local session_name="programming"
+  local project_dir="$HOME/Sites/santafe"
+
+  # If the session already exists, just attach to it
+  if tmux has-session -t "$session_name" 2>/dev/null; then
+    echo "Session '$session_name' already exists. Attaching..."
+    tmux attach-session -t "$session_name"
+    return
+  fi
+
+  # 1) Create a new detached session with an "Editor" window
+  tmux new-session -d -s "$session_name" -c "$project_dir" -n "Editor"
+  tmux send-keys -t "$session_name:0" "nvim ." C-m
+
+  # 2) Create a "Shell" window
+  tmux new-window -t "$session_name:1" -c "$project_dir" -n "Shell"
+
+  # 3) Create a "Split" window with four panes
+  tmux new-window -t "$session_name:2" -c "$project_dir" -n "Split"
+  tmux split-window -t "$session_name:2" -h -c "$project_dir"
+  tmux split-window -t "$session_name:2" -v -c "$project_dir"
+  tmux select-pane -t "$session_name:2.0"
+  tmux split-window -t "$session_name:2" -v -c "$project_dir"
+  tmux select-layout -t "$session_name:2" tiled
+
+  # 4) Switch back to the "Editor" window so you're in nvim upon attach
+  tmux select-window -t "$session_name:0"
+
+  # 5) Finally, attach to the session
+  tmux attach-session -t "$session_name"
+}
+
+function tmux_oncall() {
+  session_name="oncall"
+
+  if ! tmux has-session -t $session_name 2>/dev/null; then
+    # Create the session and Tab 1
+    tmux new-session -ds $session_name -c ~
+
+    # Tab 2
+    tmux new-window -t $session_name:1 -c ~
+
+    # Tab 3
+    tmux new-window -t $session_name:2 -c ~
+
+    # Tab 4
+    tmux new-window -t $session_name:3 -c ~
+
+    # Tab 5
+    tmux new-window -t $session_name:4 -c ~
+  fi
+
+  tmux attach-session -t $session_name
+}
+
 # Function to create notes in TIL or ONCALL directories
-notes() {
+function notes() {
   # Define the options
   local options=("TIL" "ONCALL")
 
@@ -124,7 +295,7 @@ function curlheaders() {
 function curlallheaders() {
   # Usage: curlAllHeaders https://google.com
   # Usage with http: http --follow --headers wealthfront.com
-  curl curl -sIL "$1"
+  curl -sIL "$1"
 }
 
 function curlstatuscode() {
