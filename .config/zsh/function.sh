@@ -35,8 +35,8 @@ function tmux-buddy() {
   tmux-programming)
     tmux_programming
     ;;
-  tmux_oncall)
-    tmux-oncall
+  tmux-oncall)
+    tmux_oncall
     ;;
   *)
     echo "Invalid selection or cancelled."
