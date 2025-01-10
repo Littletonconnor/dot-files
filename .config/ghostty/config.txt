@@ -1,7 +1,7 @@
 theme = catppuccin-Macchiato
 
-font-family = JetBrainsMonoNL
-font-size = 16
+font-family = Dank Mono
+font-size = 18
 
 window-decoration = true
 window-padding-x = 10
