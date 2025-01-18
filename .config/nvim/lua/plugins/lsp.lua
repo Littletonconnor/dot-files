@@ -122,7 +122,7 @@ return {
 				stylua = {},
 			}
 
-			local manually_installed_servers = { "ocamllsp", "gleam", "rust_analyzer" }
+			local manually_installed_servers = {}
 
 			local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
 
@@ -189,10 +189,9 @@ return {
 				lsp_format = "fallback",
 			},
 			formatters_by_ft = {
-				javascript = { "biome" },
-				typescript = { "biome" },
-				typescriptreact = { "biome" },
-				svelte = { "prettierd", "prettier " },
+				javascript = { "prettier" },
+				typescript = { "prettier" },
+				typescriptreact = { "prettier" },
 				lua = { "stylua" },
 			},
 		},

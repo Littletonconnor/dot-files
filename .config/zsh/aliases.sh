@@ -11,7 +11,7 @@ alias pn="pnpm"
 alias px="pnpx"
 
 # misc
-alias e="exa -lah"
+alias e="eza -lah"
 alias cat="bat"
 alias cls="clear"
 alias directory-sizes="du -sh * | sort -hr"
