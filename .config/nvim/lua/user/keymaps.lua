@@ -269,6 +269,10 @@ nnoremap("<leader>sf", function()
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
 nnoremap("<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>fg", function()
+	require("telescope").extensions.live_grep_args.live_grep_args()
+end, { desc = "[F]ind with [G]rep (args)" })
+
 nnoremap("<leader>sc", function()
 	require("telescope.builtin").commands(require("telescope.themes").get_dropdown({
 		previewer = false,

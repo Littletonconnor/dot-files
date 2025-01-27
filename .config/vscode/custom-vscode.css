@@ -4,9 +4,17 @@
   opacity: 1 !important;
 }
 
-/* File explorer action buttons */
-.monaco-workbench .part.sidebar .title-actions .actions-container {
-  display: none;
+.scroll-decoration {
+  display: none !important;
+}
+
+/* Sidebar */
+.decorationsOverviewRuler {
+  display: none !important;
+}
+
+.monaco-list-rows {
+  font-family: 'Dank Mono';
 }
 
 /* File Explorer Item Label */
@@ -42,19 +50,6 @@
   font-size: 14px !important;
   color: #fff;
   display: block;
-}
-
-/* Search icon */
-.search-icon {
-  display: none !important;
-}
-
-.codicon-search::before {
-  display: none !important;
-}
-
-.codicon-arrow-right, .codicon-arrow-left {
-  display: none !important;
 }
 
 .titlebar-right > * {
@@ -103,19 +98,6 @@
   content: '🚀';
 }
 
-/* Project title's style at the top. */
-.monaco-workbench .part.titlebar>.titlebar-container>.titlebar-center>.window-title>.command-center .action-item.command-center-center {
-  border: none !important;
-  background: transparent !important;
-}
-
-/* Project Title */
-.titlebar-left {
-  justify-content: flex-start !important;
-  flex-grow: 0 !important;
-  width: auto !important;
-}
-
 /* Search Label */
 .search-label {
   font-family: 'Dank Mono' !important;
@@ -127,23 +109,6 @@
 /* TITLE BARS */
 .monaco-icon-label-container .monaco-icon-name-container {
   font-family: 'Dank Mono' !important;
-}
-
-/* Search icon */
-.search-icon {
-  display: none !important;
-}
-
-.codicon-search::before {
-  display: none !important;
-}
-
-.codicon-arrow-right, .codicon-arrow-left {
-  display: none !important;
-}
-
-.titlebar-right > * {
-  display: none !important;
 }
 
 /* Command Palette */
@@ -166,12 +131,13 @@
   margin-bottom: 16px !important;
 }
 
+/* Add a background blur when opening command pallette */
 #command-blur {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .15);
+  background: rgba(0, 0, 0, .5);
   top: 0;
   left: 0;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(4px);
 }
