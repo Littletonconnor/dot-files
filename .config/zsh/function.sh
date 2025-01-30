@@ -283,8 +283,8 @@ function gitlog() {
 
 function cleanbranches() {
   # Remove all merge and non-merged branches locally except master and dev.
-  git branch --merged | grep -e -v "(^\*|master|main|dev)" | xargs git branch -d
-  git branch --no-merged | grep -e -v "(^\*|master|main|dev)" | xargs git branch -D
+  git branch --merged | grep -e "(^\*|master|main|dev)" | xargs git branch -d
+  git branch --no-merged | grep -e "(^\*|master|main|dev)" | xargs git branch -D
 }
 
 function curlheaders() {

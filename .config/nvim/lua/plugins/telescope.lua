@@ -4,11 +4,7 @@ return {
 		branch = "master",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-				cond = vim.fn.executable("cmake") == 1,
-			},
+			"nvim-telescope/telescope-fzf-native.nvim",
 		},
 		config = function()
 			local actions = require("telescope.actions")
@@ -26,6 +22,7 @@ return {
 					file_ignore_patterns = {
 						"node_modules",
 						"yarn.lock",
+						"pnpm-lock",
 						".git",
 						".sl",
 						"_build",
@@ -36,12 +33,29 @@ return {
 						"filename_first",
 					},
 				},
+				pickers = {
+					find_files = {
+						theme = "ivy",
+						previewer = false,
+					},
+					live_grep = {
+						theme = "ivy",
+						previewer = true,
+					},
+					oldfiles = {
+						theme = "ivy",
+						previewer = false,
+					},
+					buffers = {
+						theme = "ivy",
+						previewer = false,
+					},
+					lsp_document_symbols = {
+						theme = "ivy",
+						previewer = true,
+					},
+				},
 			})
-
-			-- Enable telescope fzf native, if installed
-			pcall(require("telescope").load_extension, "fzf")
-
-			require("telescope.multigrep").setup()
 		end,
 	},
 }
