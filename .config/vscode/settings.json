@@ -11,14 +11,11 @@
   "editor.multiCursorModifier": "ctrlCmd",
   "files.trimTrailingWhitespace": true,
   "diffEditor.renderSideBySide": false,
-  "editor.snippetSuggestions": "top",
   "window.nativeFullScreen": false,
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "workbench.sideBar.location": "right",
-  "workbench.statusBar.visible": false,
-  "workbench.editor.wrapTabs": true,
-  "workbench.editor.showTabs": "multiple",
+  "workbench.editor.wrapTabs": false,
   "editor.minimap.enabled": false,
 
   /**
@@ -26,8 +23,7 @@
    */
   "breadcrumbs.enabled": false,
   "scm.diffDecorations": "all",
-  "editor.hover.enabled": false,
-  "editor.matchBrackets": "never",
+  "editor.matchBrackets": "always",
   "workbench.tips.enabled": false,
   "editor.colorDecorators": false,
   "git.decorations.enabled": true,
@@ -50,8 +46,8 @@
   /**
    * Theme
    */
-  "workbench.colorTheme": "Catppuccin Macchiato",
-  "workbench.iconTheme": "catppuccin-macchiato",
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-mocha",
 
   /**
    * Typography
@@ -92,11 +88,6 @@
     "javascript": "javascriptreact"
   },
 
-  "vscode_custom_css.imports": [
-    "file:///Users/connorlittleton/.config/dot-files/.config/vscode/custom-vscode.css",
-    "file:///Users/connorlittleton/.config/dot-files/.config/vscode/vscode-script.js"
-  ],
-
   /**
    * Prettier
    **/
@@ -130,5 +121,5 @@
     "*.db3": "${capture}.${extname}-*",
     "*.sdb": "${capture}.${extname}-*",
     "*.s3db": "${capture}.${extname}-*"
-  },
+  }
 }
