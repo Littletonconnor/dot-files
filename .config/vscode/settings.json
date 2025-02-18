@@ -11,7 +11,8 @@
   "editor.multiCursorModifier": "ctrlCmd",
   "files.trimTrailingWhitespace": true,
   "diffEditor.renderSideBySide": false,
-  "window.nativeFullScreen": false,
+  "window.nativeFullScreen": true,
+  "window.titleBarStyle": "custom",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "workbench.sideBar.location": "right",
@@ -24,6 +25,7 @@
   "breadcrumbs.enabled": false,
   "scm.diffDecorations": "all",
   "editor.matchBrackets": "always",
+  "workbench.statusBar.visible": false,
   "workbench.tips.enabled": false,
   "editor.colorDecorators": false,
   "git.decorations.enabled": true,
@@ -59,6 +61,7 @@
   "editor.lineHeight": 0,
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": "500",
+
 
   /**
    * Find
@@ -102,6 +105,11 @@
   "workbench.layoutControl.enabled": false,
   "editor.stickyTabStops": false,
   "editor.tabSize": 2,
+
+  /**
+    Java
+  */
+  "java.editor.reloadChangedSources": "auto",
 
   /**
     Vim
