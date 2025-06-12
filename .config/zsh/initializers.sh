@@ -4,7 +4,7 @@
 HISTFILE=~/.zsh_history     # Where your history is written
 HISTSIZE=10000              # How many commands to keep in RAM
 SAVEHIST=10000              # How many commands to save to HISTFILE
-setopt VI                   # Set vi mode
+# setopt VI                   # Set vi mode
 setopt share_history        # Share history across all running zsh sessions
 setopt inc_append_history   # Immediately append every command to the history file
 setopt hist_ignore_all_dups # Don't record an entry that is already in the history
@@ -16,13 +16,20 @@ eval "$(zoxide init zsh)"
 # Initialize GO
 eval "$(goenv init -)"
 
+# bun completions
+[ -s "/Users/connorlittleton/.bun/_bun" ] && source "/Users/connorlittleton/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # Initialize Starship
 eval "$(starship init zsh)"
 # Annoying starship_zle-keymap-select-wrapped error in vi mode
-unfunction starship_zle-keymap-select-wrapped
+# unfunction starship_zle-keymap-select-wrapped
 
 # JAVA / RUBY STUFF
-export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Nvm equivalent for ruby versioning
 eval "$(rbenv init - zsh)"
