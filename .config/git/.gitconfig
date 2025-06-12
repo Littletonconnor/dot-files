@@ -1,9 +1,9 @@
 [core]
-        ignorecase = true
+	ignorecase = true
         pager = delta
 [user]
         name = Connor Littleton
-        email = littletonconnor@gmail.com
+	email = connorlittleton@wealthfront.com
 [filter "lfs"]
         clean = git-lfs clean -- %f
         smudge = git-lfs smudge -- %f
@@ -17,7 +17,7 @@
     navigate = true
 
 [merge]
-    conflictstyle = diff3
+	conflictstyle = diff3
 
 [diff]
     colorMoved = default
