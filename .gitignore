@@ -3,3 +3,4 @@ Brewfile.lock.json
 .idea/
 
 .DS_Store
+.config/nvim/.undodir/
