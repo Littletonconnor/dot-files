@@ -13,5 +13,6 @@ alias px="pnpx"
 # misc
 alias e="eza -lah"
 alias cat="bat"
+alias li="yazi"
 alias cls="clear"
 alias directory-sizes="du -sh * | sort -hr"

@@ -379,3 +379,152 @@ function sync_configs() {
   rsync -av --delete ~/.config/dot-files/.config/tmux/ ~/.config/tmux
   rsync -av --delete ~/.config/dot-files/.config/kitty/ ~/.config/kitty
 }
+
+# ==============================================================================
+# JAVA SEARCH UTILITIES - Powered by ripgrep
+# ==============================================================================
+
+# Find Java class definition by name
+function jclass() {
+  if [ -z "$1" ]; then
+    echo "Usage: jclass <ClassName>"
+    echo "Example: jclass UserService"
+    return 1
+  fi
+  echo "🔍 Searching for class $1..."
+  rg "^[^/]*\b(class|interface|enum|record)\s+$1\b" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find Java class usages (imports and references)
+function jused() {
+  if [ -z "$1" ]; then
+    echo "Usage: jused <ClassName>"
+    echo "Example: jused UserService"
+    return 1
+  fi
+  echo "🔍 Finding usages of $1..."
+  rg "\b$1\b" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find Java method definitions
+function jmethod() {
+  if [ -z "$1" ]; then
+    echo "Usage: jmethod <methodName>"
+    echo "Example: jmethod getUserById"
+    return 1
+  fi
+  echo "🔍 Searching for method $1..."
+  rg "^\s*(public|private|protected|static|final|synchronized|native|abstract)*\s*[\w<>\[\]]+\s+$1\s*\(" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find Java imports
+function jimport() {
+  if [ -z "$1" ]; then
+    echo "Usage: jimport <package or class>"
+    echo "Example: jimport springframework"
+    return 1
+  fi
+  echo "🔍 Searching for imports containing $1..."
+  rg "^import.*$1" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find Java package declarations
+function jpackage() {
+  if [ -z "$1" ]; then
+    echo "Usage: jpackage <package name pattern>"
+    echo "Example: jpackage com.mycompany.service"
+    return 1
+  fi
+  echo "🔍 Searching for package $1..."
+  rg "^package.*$1" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find Spring annotations
+function jspring() {
+  local annotation="${1:-@}"
+  echo "🔍 Searching for Spring annotations matching $annotation..."
+  rg "@(RestController|Controller|Service|Repository|Component|Configuration|Bean|Autowired|Value|RequestMapping|GetMapping|PostMapping|PutMapping|DeleteMapping|PathVariable|RequestParam|RequestBody|ResponseBody|Transactional).*$annotation" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find TODO/FIXME comments in Java files
+function jtodo() {
+  echo "🔍 Finding TODO/FIXME comments..."
+  rg "(TODO|FIXME|XXX|HACK|NOTE):" --type java --line-number --no-heading --color=always | less -R
+}
+
+# Find Java files containing a pattern (shows only filenames)
+function jfiles() {
+  local exclude_tests=false
+  local pattern=""
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -t)
+        exclude_tests=true
+        shift
+        ;;
+      *)
+        pattern="$1"
+        shift
+        ;;
+    esac
+  done
+
+  if [ -z "$pattern" ]; then
+    echo "Usage: jfiles [-t] <pattern>"
+    echo "  -t : Exclude test files (anything in srctest or src/test)"
+    echo "Example: jfiles UserService"
+    echo "Example: jfiles -t UserService"
+    return 1
+  fi
+
+  echo "🔍 Files containing $pattern:"
+  if [ "$exclude_tests" = true ]; then
+    rg -l "$pattern" --type java --glob '!**/srctest/**' --glob '!**/src/test/**' --glob '!**/*Test.java' --color=always
+  else
+    rg -l "$pattern" --type java --color=always
+  fi
+}
+
+# Quick stats about Java project
+function jstats() {
+  echo "📊 Java Project Statistics:"
+  echo "----------------------------"
+  echo "Total Java files: $(find . -name "*.java" -type f 2>/dev/null | wc -l)"
+  echo "Total lines of Java code: $(find . -name "*.java" -type f -exec wc -l {} + 2>/dev/null | tail -1 | awk '{print $1}')"
+  echo ""
+  echo "Top 10 largest Java files:"
+  find . -name "*.java" -type f -exec wc -l {} + 2>/dev/null | sort -rn | head -11 | tail -10
+}
+
+# Help function for Java utilities
+function jhelp() {
+  cat << EOF
+Java Search Utilities (using ripgrep)
+======================================
+
+Available commands:
+
+  jclass <name>      - Find class/interface/enum definitions
+  jused <name>       - Find all usages of a class
+  jmethod <name>     - Find method definitions
+  jimport <pattern>  - Find import statements
+  jpackage <pattern> - Find package declarations
+  jspring [pattern]  - Find Spring annotations
+  jtodo              - Find TODO/FIXME comments
+  jfiles <pattern>   - List files containing pattern
+  jstats             - Show project statistics
+  jhelp              - Show this help message
+
+Tips:
+  • All commands pipe to 'less -R' for colored, scrollable output
+  • Use vim keybindings in less: / to search, n/N for next/prev, q to quit
+  • Use quotes for patterns with spaces: jclass "User Service"
+
+EOF
+}
+
+# Aliases for common searches
+alias jj='jused'   # Quick usage search
+alias jf='jfiles'  # Quick file search

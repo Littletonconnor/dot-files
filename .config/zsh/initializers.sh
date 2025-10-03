@@ -47,3 +47,7 @@ export NVM_DIR="$HOME/.nvm"
 # PNPM
 export PNPM_HOME="/Users/connorlittleton/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+# JENV - Java version management (must be after other PATH modifications)
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
