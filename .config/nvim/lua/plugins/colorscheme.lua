@@ -1,4 +1,13 @@
 return {
+  -- Disable the default LazyVim colorscheme
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
+  },
+
+  -- Configure catppuccin
   {
     "catppuccin/nvim",
     name = "catppuccin",
