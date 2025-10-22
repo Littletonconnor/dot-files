@@ -6,6 +6,7 @@ alias ga="git add ."
 alias gce='git commit --allow-empty -m "Empty commit"'
 alias glog="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --decorate -n 10"
 alias feature_branch_diff="git log origin/master..HEAD --oneline"
+alias lg="lazygit"
 
 # pnpm
 alias pn="pnpm"
