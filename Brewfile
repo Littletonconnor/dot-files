@@ -17,7 +17,7 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # packages
-brew "pnpm" # node package manager
+# brew "pnpm" # managed per-node-version via npm instead
 brew "bat" # better cat
 brew "nvm" # node version manager
 brew "yazi" # Awesome file manager

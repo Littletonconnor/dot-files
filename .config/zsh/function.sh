@@ -278,7 +278,7 @@ function grecentchanges() {
 }
 
 function gitlog() {
-  git log -n 5 --pretty=format:"%h %ad %s" --date=short "$1"
+  git log -n 20 --pretty=format:"%h %ad %s" --date=short "$1"
 }
 
 function cleanbranches() {

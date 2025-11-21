@@ -12,9 +12,12 @@ alias lg="lazygit"
 alias pn="pnpm"
 alias px="pnpx"
 
+# IDE
+alias c="cursor ."
+
 # misc
 alias e="eza -lah"
 alias cat="bat"
-alias li="yazi"
+alias li="nnn -dH"
 alias cls="clear"
 alias directory_sizes="du -sh * | sort -hr"
