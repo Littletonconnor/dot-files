@@ -1,0 +1,43 @@
+# vim:ft=ruby
+# Base packages for dotfiles
+
+if OS.mac?
+  # Fonts
+  cask "font-cascadia-mono"
+  cask "font-fira-code"
+  cask "font-jetbrains-mono"
+  cask "font-recursive-code"
+  cask "font-symbols-only-nerd-font"
+
+  # Apps
+  cask "ghostty"
+  cask "raycast"
+  cask "visual-studio-code"
+end
+
+# Shell
+brew "starship"
+brew "stow"
+brew "zsh"
+brew "zsh-autosuggestions"
+
+# CLI utilities
+brew "bat"
+brew "eza"
+brew "fd"
+brew "fzf"
+brew "htop"
+brew "jq"
+brew "ripgrep"
+brew "tldr"
+brew "tree"
+brew "zoxide"
+
+# Dev tools
+brew "hey"
+
+# Version managers
+brew "goenv"
+brew "jenv"
+brew "nvm"
+brew "rbenv"

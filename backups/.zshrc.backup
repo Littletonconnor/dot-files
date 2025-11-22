@@ -1,0 +1,10 @@
+source ~/.config/dot-files/.config/zsh/zshrc.sh
+
+# load extensions
+for file in $HOME/.zshrc.d/*.zsh; do
+  source $file
+done
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/connorlittleton/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

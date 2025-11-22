@@ -1,4 +1,4 @@
-*.local.*
+*.work.*
 Brewfile.lock.json
 .idea/
 

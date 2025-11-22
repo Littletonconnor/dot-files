@@ -1,91 +1,97 @@
-# Welcome to my Dot-files configuration
+# Dotfiles
 
-The purpose of this repository is to keep up to date dot-files. When working on a new laptop or desktop, I can quickly clone this repository and have all my settings ready to go.
+Personal dotfiles managed with GNU Stow.
 
-## Initial Setup
-
-Setup your .config directory for custom configuration files:
+## Quick Start
 
 ```bash
-mkdir -p $HOME/.config && cd $HOME/.config
+# Clone the repository
+git clone https://github.com/Littletonconnor/dot-files.git ~/.config/dot-files
+cd ~/.config/dot-files
+
+# Full setup (installs packages and creates symlinks)
+./dot init
+
+# Or just update symlinks
+./dot stow
 ```
 
-Clone the repository:
+## Commands
 
 ```bash
-git clone https://github.com/Littletonconnor/dot-files.git
+# Full system setup (interactive)
+./dot init
+
+# Update symlinks for dotfiles
+./dot stow
+
+# Install dot command globally
+./dot link
+
+# Check installation health
+./dot doctor
+
+# Backup current configs
+./dot backup
+
+# Package management
+./dot package list                    # List all packages
+./dot package list base               # List base packages only
+./dot package add neovim              # Add formula to base bundle
+./dot package add discord cask        # Add cask to base bundle
+./dot package add kubectl brew work   # Add to work bundle
+./dot package update                  # Update all packages
+./dot package remove git              # Remove from bundles
 ```
 
-### homebrew
+## Structure
 
-```bash
-./install homebrew
+```
+dot-files/
+├── dot                    # CLI tool
+├── home/                  # Symlinked to ~/ via GNU Stow
+│   ├── .config/
+│   │   ├── bat/           # bat config
+│   │   ├── ghostty/       # terminal config
+│   │   ├── git/           # git config
+│   │   ├── nvim/          # neovim config
+│   │   ├── starship/      # prompt config
+│   │   ├── tmux/          # tmux config
+│   │   ├── vscode/        # vscode settings
+│   │   └── zsh/           # shell config
+│   └── .zshrc             # main zsh entry point
+├── packages/
+│   ├── bundle             # Base Brewfile
+│   └── bundle.work        # Work-specific packages
+└── README.md
 ```
 
-The homebrew command sets up homebrew by downloading and running the homebrew installers script. Once homebrew is installed, it executes the brew bundle command which will install the packages listed in the Brewfile.
+## Zsh Configuration
 
-### macos
+The zsh config is modular:
 
-Under development
+- `zshrc.sh` - Main entry point
+- `environment.sh` - Environment variables
+- `aliases.sh` - Aliases
+- `function.sh` - Custom functions
+- `initializers.sh` - Tool initialization (zoxide, nvm, rbenv, etc.)
+- `zshrc.local.sh` - Local overrides (not tracked by git)
 
-## Zsh
+## Adding a New Config
 
-My shell driver is zsh. The dot-files associated to my zsh setup are located within the `zsh` directory.
-
-### Files
-
-**zshrc**
-main zshrc file this should be sourced from your ~/.zshrc file.
-
-```sh
-# ~/.zshrc
-source ~/.config/dot-files/zsh/zshrc
-```
-
-**aliases**
-A file to store all your alias'.
-
-**environment**
-Got some environment variables you want to set? This is the place to do it.
-
-**function**
-A file to store all your handy bash functions.
-
-**zshrc.local**
-A file to store all your local zshrc settings. We check for this file in the main zshrc file and if it exists source it otherwise we do nothing. This file is not tracked by git intentionally and is useful for custom work settings.
-
-## tmux
-
-I sometimes use tmux. The dot-files associated to my tmux setup are located within the `tmux` directory and setup some simple but nice defaults.
-
-## vscode
-
-I use vscode as my main editor. This directory contains the settings and keybinding I use so I can easily copy paste them over when I need to.
-
-## git
-
-This directory contains my global git configuration that comes packaged with some nice git alias'.
-
-- This file is found at `~/.gitconfig`
-
-## What I use
-
-Here's a list of all the tools I use on a daily basis. Eventually I'll add a script to install all of these but for now you'll have to manually install them.
-
-- [iterm2](https://www.iterm2.com)
-  - Go to preferences -> profiles -> keys -> load preset -> natural text editing to enable alt + left/right arrow to skip words.
-  - After installing font-fira-code update iterm2 to use that font by going to preferences -> profiles -> text -> font -> change font.
-  - Disable the bell. Go to preferences -> profiles -> terminal -> notifications -> silence bell.
-- [homebrew](https://www.brew.sh)
-- [1password](https://www.1password.com)
-- [vscode](https://code.visualstudio.com)
-- [raycast](https://raycast.com)
-- [notion](https://www.notion.so)
+1. Create the config in `home/.config/<app>/`
+2. Run `./dot stow` to create symlinks
+3. The config will appear at `~/.config/<app>/`
 
 ## Troubleshooting
 
-Sometimes brew packages are installed in different places. To find where a brew package is installed use:
+```bash
+# Check health
+./dot doctor
 
-```sh
-brew info spaceship # This should tell you where to source the file.
+# Find where a brew package is installed
+brew info <package>
+
+# Refresh symlinks if something breaks
+./dot stow
 ```
