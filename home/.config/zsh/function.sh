@@ -20,28 +20,35 @@ function dbuddy() {
 }
 
 function tbuddy() {
-  # Define the choices (renamed from "options" to "buddy_options")
-  local buddy_options=$'tmux-sessionizer\ntmux-programming\ntmux-oncall'
+  if [[ $# -eq 1 ]]; then
+    selected=$1
+  else
+    selected=$(find ~/Sites ~/personal ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
+  fi
 
-  # Use fzf to select an option
-  local selected
-  selected=$(echo "$buddy_options" | fzf --prompt="Select a tmux session: ")
+  if [[ -z $selected ]]; then
+    exit 0
+  fi
 
-  # Check the selection and call the corresponding function
-  case "$selected" in
-  tmux-sessionizer)
-    tmux_sessionizer
-    ;;
-  tmux-programming)
-    tmux_programming
-    ;;
-  tmux-oncall)
-    tmux_oncall
-    ;;
-  *)
-    echo "Invalid selection or cancelled."
-    ;;
-  esac
+  selected_name=$(basename "$selected" | tr . _)
+  tmux_running=$(pgrep tmux)
+
+  if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    exit 0
+  fi
+
+  if ! tmux has-session -t=$selected_name 2>/dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+  fi
+
+  if [[ -z $TMUX ]]; then
+    # Attach to the session if not in tmux
+    tmux attach-session -t $selected_name
+  else
+    # Switch client if already in tmux
+    tmux switch-client -t $selected_name
+  fi
 }
 
 function findlargefiles() {
