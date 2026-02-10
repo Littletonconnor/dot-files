@@ -14,6 +14,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 DOT_DIR="${DOT_DIR:-$HOME/.config/dot-files}"
+HOME_DIR="$DOT_DIR/home"
 PACKAGES_DIR="$DOT_DIR/packages"
 BACKUP_DIR="$DOT_DIR/backups"
 
@@ -24,6 +25,13 @@ else
   BREW_PREFIX="/usr/local"
 fi
 
+# Special path mappings (source -> destination)
+# Format: "relative/path/in/home:absolute/destination/path"
+# If not listed, files copy directly to ~/ mirroring the home/ structure
+declare -A PATH_MAPPINGS=(
+  [".config/claude"]="$HOME/.claude"
+)
+
 print_help() {
   cat <<EOF
 dot - Dotfiles management CLI
@@ -32,7 +40,8 @@ Usage: dot <command> [options]
 
 Commands:
   init              Full system setup (interactive)
-  stow              Update symlinks for dotfiles
+  sync              Copy dotfiles to home directory
+  diff              Show differences between repo and installed files
   link              Install dot command globally
   unlink            Remove global dot command
   doctor            Check installation health
@@ -51,13 +60,14 @@ Options:
 
 Examples:
   dot init                           # Full setup
-  dot stow                           # Refresh symlinks
+  dot sync                           # Copy dotfiles to home
+  dot diff                           # See what would change
   dot package add neovim             # Add neovim formula
 EOF
 }
 
 print_version() {
-  echo "dot v1.0.0"
+  echo "dot v2.0.0"
 }
 
 fancy_echo() {
@@ -84,6 +94,24 @@ ensure_homebrew() {
   fi
 }
 
+# Get the destination path for a source file
+get_dest_path() {
+  local rel_path="$1"
+
+  # Check if any mapping prefix matches
+  for src_prefix in "${!PATH_MAPPINGS[@]}"; do
+    if [[ "$rel_path" == "$src_prefix"* ]]; then
+      local dest_prefix="${PATH_MAPPINGS[$src_prefix]}"
+      local suffix="${rel_path#$src_prefix}"
+      echo "${dest_prefix}${suffix}"
+      return
+    fi
+  done
+
+  # Default: copy to home directory
+  echo "$HOME/$rel_path"
+}
+
 cmd_init() {
   fancy_echo "Starting dotfiles setup..." "blue"
 
@@ -106,24 +134,74 @@ cmd_init() {
     fi
   fi
 
-  # Run stow
-  cmd_stow
+  # Run sync
+  cmd_sync
 
   fancy_echo "✓ Setup complete!" "green"
 }
 
-cmd_stow() {
-  fancy_echo "Updating symlinks..." "blue"
+cmd_sync() {
+  fancy_echo "Syncing dotfiles..." "blue"
 
-  if ! check_command stow; then
-    fancy_echo "Installing stow..." "yellow"
-    brew install stow
+  local copied=0
+  local skipped=0
+
+  # Find all files in home directory (excluding .git directories)
+  while IFS= read -r -d '' src_file; do
+    # Get relative path from home directory
+    local rel_path="${src_file#$HOME_DIR/}"
+
+    # Get destination path (handles special mappings)
+    local dest_file
+    dest_file=$(get_dest_path "$rel_path")
+
+    # Create parent directory if needed
+    local dest_dir
+    dest_dir=$(dirname "$dest_file")
+    mkdir -p "$dest_dir"
+
+    # Copy the file
+    cp "$src_file" "$dest_file"
+    ((copied++))
+
+  done < <(find "$HOME_DIR" -type f -not -path '*/.git/*' -print0)
+
+  fancy_echo "✓ Synced $copied files" "green"
+
+  # Show special mappings that were applied
+  if [[ ${#PATH_MAPPINGS[@]} -gt 0 ]]; then
+    fancy_echo "\nSpecial path mappings applied:" "blue"
+    for src in "${!PATH_MAPPINGS[@]}"; do
+      fancy_echo "  $src → ${PATH_MAPPINGS[$src]}" "yellow"
+    done
   fi
+}
 
-  cd "$DOT_DIR"
-  stow -R -v -d . -t "$HOME" home
+cmd_diff() {
+  fancy_echo "Checking for differences..." "blue"
 
-  fancy_echo "✓ Symlinks updated" "green"
+  local has_diff=0
+
+  while IFS= read -r -d '' src_file; do
+    local rel_path="${src_file#$HOME_DIR/}"
+    local dest_file
+    dest_file=$(get_dest_path "$rel_path")
+
+    if [[ ! -f "$dest_file" ]]; then
+      fancy_echo "  NEW: $rel_path" "green"
+      has_diff=1
+    elif ! diff -q "$src_file" "$dest_file" &>/dev/null; then
+      fancy_echo "  MODIFIED: $rel_path" "yellow"
+      has_diff=1
+    fi
+  done < <(find "$HOME_DIR" -type f -not -path '*/.git/*' -print0)
+
+  if [[ $has_diff -eq 0 ]]; then
+    fancy_echo "✓ All files are in sync" "green"
+  else
+    echo
+    fancy_echo "Run 'dot sync' to apply changes" "blue"
+  fi
 }
 
 cmd_link() {
@@ -162,26 +240,32 @@ cmd_doctor() {
     ((issues++))
   fi
 
-  # Check stow
-  if check_command stow; then
-    fancy_echo "✓ GNU Stow installed" "green"
+  # Check key config files exist
+  if [[ -f "$HOME/.zshrc" ]]; then
+    fancy_echo "✓ .zshrc exists" "green"
   else
-    fancy_echo "✗ GNU Stow not installed" "red"
+    fancy_echo "✗ .zshrc missing" "red"
     ((issues++))
   fi
 
-  # Check symlinks
-  if [[ -L "$HOME/.zshrc" ]]; then
-    fancy_echo "✓ .zshrc symlinked" "green"
+  if [[ -d "$HOME/.config/zsh" ]]; then
+    fancy_echo "✓ .config/zsh exists" "green"
   else
-    fancy_echo "✗ .zshrc not symlinked" "red"
+    fancy_echo "✗ .config/zsh missing" "red"
     ((issues++))
   fi
 
-  if [[ -L "$HOME/.config/zsh" ]]; then
-    fancy_echo "✓ .config/zsh symlinked" "green"
+  if [[ -d "$HOME/.config/nvim" ]]; then
+    fancy_echo "✓ .config/nvim exists" "green"
   else
-    fancy_echo "✗ .config/zsh not symlinked" "red"
+    fancy_echo "✗ .config/nvim missing" "red"
+    ((issues++))
+  fi
+
+  if [[ -f "$HOME/.claude/settings.json" ]]; then
+    fancy_echo "✓ .claude/settings.json exists" "green"
+  else
+    fancy_echo "✗ .claude/settings.json missing" "red"
     ((issues++))
   fi
 
@@ -192,10 +276,23 @@ cmd_doctor() {
     fancy_echo "! Zsh is not default shell" "yellow"
   fi
 
+  # Check for stale symlinks (from old stow setup)
+  local stale_symlinks=0
+  for item in "$HOME/.zshrc" "$HOME/.config/zsh" "$HOME/.config/nvim"; do
+    if [[ -L "$item" ]]; then
+      fancy_echo "! $item is a symlink (consider running 'dot sync' to convert to copy)" "yellow"
+      ((stale_symlinks++))
+    fi
+  done
+
   if [[ $issues -eq 0 ]]; then
-    fancy_echo "\nAll checks passed!" "green"
+    fancy_echo "\n✓ All checks passed!" "green"
   else
     fancy_echo "\n$issues issue(s) found" "red"
+  fi
+
+  if [[ $stale_symlinks -gt 0 ]]; then
+    fancy_echo "$stale_symlinks symlink(s) detected from old stow setup" "yellow"
   fi
 }
 
@@ -213,6 +310,7 @@ cmd_backup() {
   cp -R "$HOME/.config/zsh" "$backup_path/zsh" 2>/dev/null || true
   cp -R "$HOME/.config/nvim" "$backup_path/nvim" 2>/dev/null || true
   cp -R "$HOME/.config/git" "$backup_path/git" 2>/dev/null || true
+  cp -R "$HOME/.claude" "$backup_path/claude" 2>/dev/null || true
 
   # Compress
   cd "$BACKUP_DIR"
@@ -353,7 +451,12 @@ main() {
 
   case "$cmd" in
   init) cmd_init ;;
-  stow) cmd_stow ;;
+  sync) cmd_sync ;;
+  diff) cmd_diff ;;
+  stow)
+    fancy_echo "Note: 'stow' has been replaced with 'sync' (now uses copies instead of symlinks)" "yellow"
+    cmd_sync
+    ;;
   link) cmd_link ;;
   unlink) cmd_unlink ;;
   doctor) cmd_doctor ;;

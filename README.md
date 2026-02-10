@@ -1,6 +1,6 @@
 # Dotfiles
 
-Personal dotfiles managed with GNU Stow.
+Personal dotfiles managed with a simple copy-based approach.
 
 ## Quick Start
 
@@ -9,11 +9,11 @@ Personal dotfiles managed with GNU Stow.
 git clone https://github.com/Littletonconnor/dot-files.git ~/.config/dot-files
 cd ~/.config/dot-files
 
-# Full setup (installs packages and creates symlinks)
+# Full setup (installs packages and copies dotfiles)
 ./dot init
 
-# Or just update symlinks
-./dot stow
+# Or just sync dotfiles
+./dot sync
 ```
 
 ## Commands
@@ -22,8 +22,11 @@ cd ~/.config/dot-files
 # Full system setup (interactive)
 ./dot init
 
-# Update symlinks for dotfiles
-./dot stow
+# Copy dotfiles to home directory
+./dot sync
+
+# Preview what would change
+./dot diff
 
 # Install dot command globally
 ./dot link
@@ -49,9 +52,10 @@ cd ~/.config/dot-files
 ```
 dot-files/
 ├── dot                    # CLI tool
-├── home/                  # Symlinked to ~/ via GNU Stow
+├── home/                  # Copied to ~/ (mirroring structure)
 │   ├── .config/
 │   │   ├── bat/           # bat config
+│   │   ├── claude/        # claude config → ~/.claude/
 │   │   ├── ghostty/       # terminal config
 │   │   ├── git/           # git config
 │   │   ├── nvim/          # neovim config
@@ -65,6 +69,20 @@ dot-files/
 │   └── bundle.work        # Work-specific packages
 └── README.md
 ```
+
+## How It Works
+
+The `dot sync` command copies all files from `home/` to your home directory, preserving the directory structure.
+
+### Special Path Mappings
+
+Some configs need to go to non-standard locations. These are configured in the `PATH_MAPPINGS` array at the top of the `dot` script:
+
+| Source | Destination |
+|--------|-------------|
+| `home/.config/claude/` | `~/.claude/` |
+
+Files not in this mapping are copied directly to `~/` mirroring their path in `home/`.
 
 ## Zsh Configuration
 
@@ -80,8 +98,23 @@ The zsh config is modular:
 ## Adding a New Config
 
 1. Create the config in `home/.config/<app>/`
-2. Run `./dot stow` to create symlinks
+2. Run `./dot sync` to copy to home
 3. The config will appear at `~/.config/<app>/`
+
+For configs that need special paths, add a mapping to `PATH_MAPPINGS` in the `dot` script.
+
+## Workflow
+
+```bash
+# Edit configs in the repo
+vim ~/.config/dot-files/home/.config/nvim/init.lua
+
+# Sync to home
+dot sync
+
+# Or see what would change first
+dot diff
+```
 
 ## Troubleshooting
 
@@ -92,6 +125,14 @@ The zsh config is modular:
 # Find where a brew package is installed
 brew info <package>
 
-# Refresh symlinks if something breaks
-./dot stow
+# See what files differ between repo and installed
+./dot diff
 ```
+
+## Migration from Stow
+
+If you were using the previous symlink-based approach:
+
+1. The `stow` command still works (aliased to `sync`)
+2. `dot doctor` will warn about existing symlinks
+3. Running `dot sync` will replace symlinks with actual files
