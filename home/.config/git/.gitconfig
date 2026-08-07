@@ -2,7 +2,7 @@
   ignorecase = true
         pager = delta
 [user]
-        name = Connor Littleton
+  name = Connor Littleton
   email = connorlittleton@wealthfront.com
 [filter "lfs"]
         clean = git-lfs clean -- %f
@@ -62,6 +62,14 @@
   force = push --force-with-lease
   fam = "!f() { git add . && git amend && git force; }; f"
 
+  # Worktree aliases
+  wta = "!f() { git worktree add ../$1 -b $1; }; f"
+  wtl = worktree list
+  wtr = "!f() { git worktree remove ../$1; }; f"
+
+  # Quick new branch from main
+  nb = "!f() { git checkout main && git pull && git checkout -b $1; }; f"
+
   # Mistake related aliases
   abort = checkout -- .
   wait = reset HEAD
@@ -70,6 +78,8 @@
 
   # Diff related aliases
   changes = diff --name-status
+  dm = diff main
+  lm = log main..HEAD --oneline
   lg = log --pretty=oneline --abbrev-commit --graph --decorate
 
   # remote merging

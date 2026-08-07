@@ -41,3 +41,7 @@ export PATH="$PNPM_HOME:$PATH"
 # JENV - Java version management (must be after other PATH modifications)
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/connorlittleton/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

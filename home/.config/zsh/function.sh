@@ -141,3 +141,165 @@ function untar() {
 function humanreadablepath() {
   echo "$PATH" | tr ':' '\n'
 }
+
+# wf-autopull: keep each repo's default branch (master/main) up to date in the
+# background. Never modifies a feature-branch working tree, never stashes.
+# See `wf-autopull --help`.
+_wf_autopull_log() {
+  local line="[$(date '+%Y-%m-%d %H:%M:%S')] $2"
+  print -r -- "$line" >> "$1"
+  [[ -t 1 ]] && print -r -- "$line"
+}
+
+_wf_autopull_in_progress() {
+  local g="$1/.git"
+  [[ -e "$g/MERGE_HEAD" || -e "$g/CHERRY_PICK_HEAD" || -e "$g/REVERT_HEAD" \
+     || -d "$g/rebase-apply" || -d "$g/rebase-merge" || -e "$g/BISECT_LOG" ]]
+}
+
+_wf_autopull_default_branch() {
+  local repo="$1" remote="$2" ref b
+  ref=$(git -C "$repo" symbolic-ref --quiet --short "refs/remotes/$remote/HEAD" 2>/dev/null) || true
+  if [[ -n "$ref" ]]; then
+    print -r -- "${ref#$remote/}"
+    return
+  fi
+  for b in master main; do
+    if git -C "$repo" show-ref --verify --quiet "refs/heads/$b"; then
+      print -r -- "$b"
+      return
+    fi
+  done
+  print -r -- ""
+}
+
+function wf-autopull() {
+  emulate -L zsh
+  setopt local_options null_glob
+
+  local repos_root="${WF_AUTOPULL_ROOT:-$HOME/Sites}"
+  local remote="${WF_AUTOPULL_REMOTE:-origin}"
+  local log_file="${WF_AUTOPULL_LOG:-$HOME/.wf-autopull.log}"
+  local timeout_secs="${WF_AUTOPULL_TIMEOUT:-30}"
+  local dry_run=0 verbose=0
+  local PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+  local arg
+  for arg in "$@"; do
+    case "$arg" in
+      --dry-run) dry_run=1 ;;
+      --verbose|-v) verbose=1 ;;
+      -h|--help)
+        cat <<'HELP'
+Usage: wf-autopull [--dry-run] [--verbose]
+
+Keeps each repo's default branch (master/main) up to date.
+Never touches a feature branch's working tree. Never stashes.
+
+Per repo:
+  mid-rebase/merge/bisect   skip
+  on default branch         git pull --ff-only
+                            (git itself refuses if dirty paths would clash)
+  on any other branch       git fetch <remote> <default>:<default>
+                            (advances local ref as fast-forward, no checkout)
+
+Env config:
+  WF_AUTOPULL_ROOT     parent dir of repos    (default: ~/Sites)
+  WF_AUTOPULL_REMOTE   remote name            (default: origin)
+  WF_AUTOPULL_LOG      log file               (default: ~/.wf-autopull.log)
+  WF_AUTOPULL_TIMEOUT  per-git-command secs   (default: 30)
+HELP
+        return 0
+        ;;
+      *)
+        print -u2 -- "wf-autopull: unknown arg: $arg"
+        return 2
+        ;;
+    esac
+  done
+
+  local lock_dir="${TMPDIR:-/tmp}/wf-autopull.lock.d"
+  if ! mkdir "$lock_dir" 2>/dev/null; then
+    _wf_autopull_log "$log_file" "another wf-autopull run is in progress; exiting"
+    return 0
+  fi
+  trap "rmdir '$lock_dir' 2>/dev/null" EXIT INT TERM HUP
+
+  if [[ ! -d "$repos_root" ]]; then
+    _wf_autopull_log "$log_file" "repos root does not exist: $repos_root"
+    return 1
+  fi
+
+  local timeout_cmd=()
+  if command -v gtimeout >/dev/null 2>&1; then
+    timeout_cmd=(gtimeout "$timeout_secs")
+  elif command -v timeout >/dev/null 2>&1; then
+    timeout_cmd=(timeout "$timeout_secs")
+  fi
+
+  _wf_autopull_log "$log_file" "wf-autopull start (root=$repos_root, remote=$remote, dry_run=$dry_run)"
+
+  local count=0 repo name default current before after out rc
+  for repo in "$repos_root"/*; do
+    [[ -d "$repo/.git" || -f "$repo/.git" ]] || continue
+    count=$((count + 1))
+    name="${repo#$repos_root/}"
+
+    if _wf_autopull_in_progress "$repo"; then
+      (( verbose )) && _wf_autopull_log "$log_file" "skip $name (rebase/merge/bisect in progress)"
+      continue
+    fi
+
+    if ! git -C "$repo" remote get-url "$remote" >/dev/null 2>&1; then
+      (( verbose )) && _wf_autopull_log "$log_file" "skip $name (no remote '$remote')"
+      continue
+    fi
+
+    default=$(_wf_autopull_default_branch "$repo" "$remote")
+    if [[ -z "$default" ]]; then
+      (( verbose )) && _wf_autopull_log "$log_file" "skip $name (no master or main)"
+      continue
+    fi
+
+    current=$(git -C "$repo" symbolic-ref --quiet --short HEAD 2>/dev/null || print -- DETACHED)
+
+    if (( dry_run )); then
+      if [[ "$current" == "$default" ]]; then
+        _wf_autopull_log "$log_file" "DRY: $name on $default -> git pull --ff-only $remote $default"
+      else
+        _wf_autopull_log "$log_file" "DRY: $name on $current -> git fetch $remote $default:$default"
+      fi
+      continue
+    fi
+
+    if [[ "$current" == "$default" ]]; then
+      before=$(git -C "$repo" rev-parse HEAD 2>/dev/null)
+      out=$("${timeout_cmd[@]}" git -C "$repo" pull --ff-only --quiet "$remote" "$default" 2>&1)
+      rc=$?
+      after=$(git -C "$repo" rev-parse HEAD 2>/dev/null)
+      if (( rc == 0 )); then
+        if [[ "$before" != "$after" ]]; then
+          _wf_autopull_log "$log_file" "ok   $name (pulled $default ${before:0:8} -> ${after:0:8})"
+        else
+          (( verbose )) && _wf_autopull_log "$log_file" "noop $name (already at $default ${after:0:8})"
+        fi
+      else
+        (( verbose )) && _wf_autopull_log "$log_file" "warn $name (pull --ff-only $default failed: ${out%%$'\n'*})"
+      fi
+    else
+      before=$(git -C "$repo" rev-parse "$default" 2>/dev/null)
+      if "${timeout_cmd[@]}" git -C "$repo" fetch --quiet --no-tags "$remote" "$default:$default" >/dev/null 2>&1; then
+        after=$(git -C "$repo" rev-parse "$default" 2>/dev/null)
+        if [[ "$before" != "$after" ]]; then
+          _wf_autopull_log "$log_file" "ok   $name (advanced $default ${before:0:8} -> ${after:0:8} while on $current)"
+        else
+          (( verbose )) && _wf_autopull_log "$log_file" "noop $name (already at $default ${after:0:8})"
+        fi
+      else
+        (( verbose )) && _wf_autopull_log "$log_file" "warn $name (fetch $default:$default failed; not fast-forwardable or offline)"
+      fi
+    fi
+  done
+
+  _wf_autopull_log "$log_file" "wf-autopull done ($count repos scanned)"
+}

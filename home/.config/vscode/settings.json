@@ -1,7 +1,4 @@
 {
-  /**
-   * Better Defaults
-   **/
   "editor.copyWithSyntaxHighlighting": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.emptySelectionClipboard": false,
@@ -18,11 +15,6 @@
   "workbench.sideBar.location": "right",
   "workbench.editor.wrapTabs": false,
   "editor.minimap.enabled": false,
-
-  /**
-   * Silence The Noise
-   */
-  "breadcrumbs.enabled": false,
   "scm.diffDecorations": "all",
   "editor.matchBrackets": "always",
   "workbench.statusBar.visible": false,
@@ -44,35 +36,19 @@
   "workbench.editor.enablePreviewFromQuickOpen": false,
   "editor.gotoLocation.multipleImplementations": "goto",
   "editor.gotoLocation.multipleTypeDefinitions": "goto",
-
-  /**
-   * Theme
-   */
-  "workbench.colorTheme": "Catppuccin Mocha",
-  "workbench.iconTheme": "catppuccin-mocha",
-
-  /**
-   * Typography
-   **/
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "catppuccin-macchiato",
   "editor.fontFamily": "Dank Mono, Fira Code, Menlo, 'Courier New', monospace",
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'",
   "editor.fontSize": 16,
-  "editor.fontWeight": "500",
+  "editor.fontWeight": "400",
   "editor.lineHeight": 0,
   "terminal.integrated.fontSize": 16,
-  "terminal.integrated.fontWeight": "500",
-
-
-  /**
-   * Find
-   **/
-  "search.useIgnoreFiles": false,
+  "terminal.integrated.fontWeight": "400",
   "search.exclude": {
     "**/vendor/{[^l],?[^ai]}*": true,
     "**/tmp/*": true,
     "**/.cache/*": true,
-
-    // Hide everything in /public
     "**/public": true,
     "**/node_modules": true,
     "**/dist": true,
@@ -82,38 +58,18 @@
     "**/pnpm-lock.yaml": true,
     "storage": true
   },
-
-  /**
-   * Code
-   **/
   "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
   },
-
-  /**
-   * Prettier
-   **/
-  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,
   "prettier.useEditorConfig": false,
   "editor.guides.indentation": false,
   "workbench.activityBar.location": "hidden",
-
-  "window.commandCenter": false,
-  "workbench.layoutControl.enabled": false,
   "editor.stickyTabStops": false,
   "editor.tabSize": 2,
-
-  /**
-    Java
-  */
   "java.editor.reloadChangedSources": "auto",
-
-  /**
-    Vim
-  */
   "vim.foldfix": true,
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
@@ -129,5 +85,30 @@
     "*.db3": "${capture}.${extname}-*",
     "*.sdb": "${capture}.${extname}-*",
     "*.s3db": "${capture}.${extname}-*"
-  }
+  },
+  "typescript.tsserver.log": "off",
+  "window.commandCenter": false,
+  "debug.disassemblyView.showSourceCode": false,
+  "editor.formatOnSave": true,
+  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
+  "search.useIgnoreFiles": false,
+  "search.useGlobalIgnoreFiles": true,
+  "git.blame.editorDecoration.enabled": false,
+  "git.confirmSync": false,
+  "go.toolsManagement.autoUpdate": true,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "cursor.composer.queueMessageDefaultBehavior": "send",
+  "git.openRepositoryInParentFolders": "never",
+  "gitlens.currentLine.enabled": false,
+  "git.blame.statusBarItem.enabled": false,
+  "claudeCode.preferredLocation": "panel",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "accessibility.signalOptions.volume": 0,
+  "accessibility.signals.terminalBell": {
+    "sound": "off"
+  },
+  "terminal.integrated.enableVisualBell": false,
+  "editor.accessibilitySupport": "off"
 }

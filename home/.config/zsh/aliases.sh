@@ -14,6 +14,7 @@ alias px="pnpx"
 
 # IDE
 alias c="cursor ."
+alias cw="cursor /Users/connorlittleton/Sites/code-workspace/ai.code-workspace"
 
 # TMUX
 

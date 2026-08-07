@@ -4,3 +4,6 @@ Brewfile.lock.json
 
 .DS_Store
 .config/nvim/.undodir/
+
+/vendor/
+/.ruby-lsp/
