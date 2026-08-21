@@ -42,35 +42,6 @@ require("lazy").setup({
     -- Java support disabled for performance
     -- { import = "lazyvim.plugins.extras.lang.java" },
 
-    -- Ruby/Rails support (solargraph LSP, rubocop, etc.)
-    { import = "lazyvim.plugins.extras.lang.ruby" },
-
-    -- TypeScript/JavaScript support (typescript-language-server, eslint, prettier)
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-
-    -- JSON support (better JSON handling)
-    { import = "lazyvim.plugins.extras.lang.json" },
-
-    -- YAML support (useful for config files)
-    { import = "lazyvim.plugins.extras.lang.yaml" },
-
-    -- Markdown support (preview, better editing)
-    { import = "lazyvim.plugins.extras.lang.markdown" },
-
-    -- ========================================================================
-    -- FORMATTING & LINTING EXTRAS
-    -- ========================================================================
-
-    -- Prettier support (auto-format JS/TS/CSS/HTML/JSON/Markdown)
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
-
-    -- ESLint support (linting for JS/TS)
-    { import = "lazyvim.plugins.extras.linting.eslint" },
-
-    -- ========================================================================
-    -- USEFUL EXTRAS (Optional but recommended)
-    -- ========================================================================
-
     -- Better UI components
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },  -- Smooth scrolling/animations
 
@@ -114,7 +85,7 @@ require("lazy").setup({
   -- AUTO-UPDATE SETTINGS
   -- ========================================================================
   checker = {
-    enabled = true, -- Automatically check for plugin updates
+    enabled = false, -- Automatically check for plugin updates
     notify = false, -- Don't notify about updates (check with :Lazy)
     frequency = 86400, -- Check for updates every 24 hours
   },

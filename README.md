@@ -25,14 +25,11 @@ cd ~/.config/dot-files
 # Update symlinks for dotfiles
 ./dot stow
 
-# Install dot command globally
+# Install dot command in ~/.local/bin
 ./dot link
 
 # Check installation health
 ./dot doctor
-
-# Backup current configs
-./dot backup
 
 # Package management
 ./dot package list                    # List all packages

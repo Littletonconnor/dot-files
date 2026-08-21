@@ -8,11 +8,9 @@ This file provides guidance to Claude Code when working with this repository.
 ```bash
 ./dot init              # Full system setup (interactive)
 ./dot stow              # Update symlinks
-./dot link              # Install dot command globally
-./dot unlink            # Remove global dot command
+./dot link              # Install dot command in ~/.local/bin
+./dot unlink            # Remove installed dot command
 ./dot doctor            # Check installation health
-./dot backup            # Create backup
-./dot restore           # Restore from backup
 
 # Package management
 ./dot package list [base|work]

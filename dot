@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 
 DOT_DIR="${DOT_DIR:-$HOME/.config/dot-files}"
 PACKAGES_DIR="$DOT_DIR/packages"
-BACKUP_DIR="$DOT_DIR/backups"
+BIN_DIR="${BIN_DIR:-$HOME/.local/bin}"
 
 # Detect Homebrew path
 if [[ -d "/opt/homebrew" ]]; then
@@ -33,11 +33,9 @@ Usage: dot <command> [options]
 Commands:
   init              Full system setup (interactive)
   stow              Update symlinks for dotfiles
-  link              Install dot command globally
-  unlink            Remove global dot command
+  link              Install dot command in ~/.local/bin
+  unlink            Remove installed dot command
   doctor            Check installation health
-  backup            Create backup of current configs
-  restore           Restore from backup
 
 Package Management:
   package list [base|work]           List packages
@@ -127,22 +125,23 @@ cmd_stow() {
 }
 
 cmd_link() {
-  local link_path="$BREW_PREFIX/bin/dot"
+  local link_path="$BIN_DIR/dot"
 
   if [[ -L "$link_path" ]]; then
     fancy_echo "dot is already linked at $link_path" "yellow"
     return 0
   fi
 
-  sudo ln -sf "$DOT_DIR/dot" "$link_path"
+  mkdir -p "$BIN_DIR"
+  ln -sf "$DOT_DIR/dot" "$link_path"
   fancy_echo "✓ dot command linked to $link_path" "green"
 }
 
 cmd_unlink() {
-  local link_path="$BREW_PREFIX/bin/dot"
+  local link_path="$BIN_DIR/dot"
 
   if [[ -L "$link_path" ]]; then
-    sudo rm "$link_path"
+    rm "$link_path"
     fancy_echo "✓ dot command unlinked" "green"
   else
     fancy_echo "dot is not linked" "yellow"
@@ -153,13 +152,27 @@ cmd_doctor() {
   fancy_echo "Running health checks..." "blue"
 
   local issues=0
+  local path
+  local relative_path
+  local expected_path
+  local managed_paths=(
+    ".zshrc"
+    ".config/bat"
+    ".config/ghostty"
+    ".config/git"
+    ".config/nvim"
+    ".config/starship"
+    ".config/tmux"
+    ".config/vscode"
+    ".config/zsh"
+  )
 
   # Check Homebrew
   if check_command brew; then
     fancy_echo "✓ Homebrew installed" "green"
   else
     fancy_echo "✗ Homebrew not installed" "red"
-    ((issues++))
+    issues=$((issues + 1))
   fi
 
   # Check stow
@@ -167,22 +180,28 @@ cmd_doctor() {
     fancy_echo "✓ GNU Stow installed" "green"
   else
     fancy_echo "✗ GNU Stow not installed" "red"
-    ((issues++))
+    issues=$((issues + 1))
   fi
 
-  # Check symlinks
-  if [[ -L "$HOME/.zshrc" ]]; then
-    fancy_echo "✓ .zshrc symlinked" "green"
-  else
-    fancy_echo "✗ .zshrc not symlinked" "red"
-    ((issues++))
-  fi
+  # Check every path managed by the Stow package and verify its target.
+  for relative_path in "${managed_paths[@]}"; do
+    path="$HOME/$relative_path"
+    expected_path="$DOT_DIR/home/$relative_path"
+    if [[ -L "$path" && -e "$path" && "$path" -ef "$expected_path" ]]; then
+      fancy_echo "✓ $relative_path symlinked" "green"
+    else
+      fancy_echo "✗ $relative_path is missing, broken, or points outside this repo" "red"
+      issues=$((issues + 1))
+    fi
+  done
 
-  if [[ -L "$HOME/.config/zsh" ]]; then
-    fancy_echo "✓ .config/zsh symlinked" "green"
+  # Check the CLI link separately because it is not managed by Stow.
+  path="$BIN_DIR/dot"
+  if [[ -L "$path" && -e "$path" && "$path" -ef "$DOT_DIR/dot" ]]; then
+    fancy_echo "✓ dot command linked" "green"
   else
-    fancy_echo "✗ .config/zsh not symlinked" "red"
-    ((issues++))
+    fancy_echo "✗ dot command not linked; run ./dot link" "red"
+    issues=$((issues + 1))
   fi
 
   # Check shell
@@ -196,58 +215,6 @@ cmd_doctor() {
     fancy_echo "\nAll checks passed!" "green"
   else
     fancy_echo "\n$issues issue(s) found" "red"
-  fi
-}
-
-cmd_backup() {
-  local timestamp
-  timestamp=$(date +%Y%m%d_%H%M%S)
-  local backup_path="$BACKUP_DIR/$timestamp"
-
-  mkdir -p "$backup_path"
-
-  fancy_echo "Creating backup at $backup_path..." "blue"
-
-  # Backup key configs
-  cp -R "$HOME/.zshrc" "$backup_path/" 2>/dev/null || true
-  cp -R "$HOME/.config/zsh" "$backup_path/zsh" 2>/dev/null || true
-  cp -R "$HOME/.config/nvim" "$backup_path/nvim" 2>/dev/null || true
-  cp -R "$HOME/.config/git" "$backup_path/git" 2>/dev/null || true
-
-  # Compress
-  cd "$BACKUP_DIR"
-  tar -czf "$timestamp.tar.gz" "$timestamp"
-  rm -rf "$backup_path"
-
-  fancy_echo "✓ Backup created: $BACKUP_DIR/$timestamp.tar.gz" "green"
-}
-
-cmd_restore() {
-  if [[ ! -d "$BACKUP_DIR" ]]; then
-    fancy_echo "No backups found" "red"
-    return 1
-  fi
-
-  fancy_echo "Available backups:" "blue"
-  ls -1 "$BACKUP_DIR"/*.tar.gz 2>/dev/null || {
-    fancy_echo "No backups found" "red"
-    return 1
-  }
-
-  read -rp "Enter backup filename to restore: " backup_file
-
-  if [[ -f "$BACKUP_DIR/$backup_file" ]]; then
-    cd "$BACKUP_DIR"
-    tar -xzf "$backup_file"
-    local dir_name="${backup_file%.tar.gz}"
-
-    fancy_echo "Restoring from $backup_file..." "blue"
-    cp -R "$dir_name"/* "$HOME/.config/" 2>/dev/null || true
-    rm -rf "$dir_name"
-
-    fancy_echo "✓ Restore complete" "green"
-  else
-    fancy_echo "Backup not found: $backup_file" "red"
     return 1
   fi
 }
@@ -261,11 +228,11 @@ cmd_package() {
     local bundle="${1:-all}"
     if [[ "$bundle" == "all" || "$bundle" == "base" ]]; then
       fancy_echo "Base packages:" "blue"
-      cat "$PACKAGES_DIR/bundle" | grep -E "^brew|^cask" || true
+      grep -E "^brew|^cask" "$PACKAGES_DIR/bundle" || true
     fi
     if [[ "$bundle" == "all" || "$bundle" == "work" ]]; then
       fancy_echo "\nWork packages:" "blue"
-      cat "$PACKAGES_DIR/bundle.work" | grep -E "^brew|^cask" || true
+      grep -E "^brew|^cask" "$PACKAGES_DIR/bundle.work" || true
     fi
     ;;
   add)
@@ -357,8 +324,6 @@ main() {
   link) cmd_link ;;
   unlink) cmd_unlink ;;
   doctor) cmd_doctor ;;
-  backup) cmd_backup ;;
-  restore) cmd_restore ;;
   package) cmd_package "$@" ;;
   -h | --help | help) print_help ;;
   -v | --version) print_version ;;
